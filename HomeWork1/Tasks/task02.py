@@ -13,7 +13,6 @@ def check_fibonacci(data: Sequence) -> bool:
 
     if len(data) == 0:
         return False
-
     for index, numb in enumerate(data):
         if index > 1:
             if data[index - 2] + data[index - 1] != numb:

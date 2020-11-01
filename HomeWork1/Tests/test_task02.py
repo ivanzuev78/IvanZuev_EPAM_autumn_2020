@@ -5,6 +5,7 @@ from HomeWork1.Tasks.task02 import check_fibonacci
 
 class TestTask02(unittest.TestCase):
     def setUp(self) -> None:
+
         self.empty_sequence = []
         self.sequence_len1_true = [0]
         self.sequence_len1_true_2 = [1]

@@ -17,6 +17,7 @@ from typing import Tuple
 
 
 def find_maximum_and_minimum(file_name: str) -> Tuple[int, int]:
+
     max_numb = None
     min_numb = None
     with open(file_name) as fi:

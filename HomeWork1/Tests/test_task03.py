@@ -23,6 +23,7 @@ class TestTask03(unittest.TestCase):
                 f.write(f"1\n")
 
     def test_find_maximum_and_minimum(self):
+
         self.assertEqual(
             find_maximum_and_minimum("data_test_task03_min1_max9.txt"), (1, 9)
         )
