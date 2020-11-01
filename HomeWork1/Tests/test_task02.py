@@ -1,9 +1,9 @@
 import unittest
+
 from HomeWork1.Tasks.task02 import check_fibonacci
 
 
 class TestTask02(unittest.TestCase):
-
     def setUp(self) -> None:
         self.empty_sequence = []
         self.sequence_len1_true = [0]
@@ -12,7 +12,7 @@ class TestTask02(unittest.TestCase):
         self.sequence_len2_true = [0, 1]
         self.sequence_len2_true_2 = [1, 1]
         self.sequence_len2_false = [1, 2]
-        self.sequence_len3_true = [ 0, 1, 1]
+        self.sequence_len3_true = [0, 1, 1]
         self.sequence_len3_true_2 = [1, 1, 2]
         self.sequence_true = [1, 1, 2, 3, 5, 8]
         self.sequence_true_2 = [1, 1, 2, 3, 5]
@@ -43,6 +43,5 @@ class TestTask02(unittest.TestCase):
         self.assertEqual(check_fibonacci(self.sequence_false_2), False)
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
