@@ -12,6 +12,7 @@ with open("some_file.txt") as fi:
     for line in fi:
         ...
 
+
 """
 from typing import Tuple
 
