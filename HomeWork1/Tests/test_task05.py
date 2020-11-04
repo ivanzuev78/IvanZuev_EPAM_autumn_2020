@@ -3,13 +3,9 @@ import unittest
 from HomeWork1.Tasks.task05 import find_maximal_subarray_sum
 
 
-class TestTask03(unittest.TestCase):
-    def setUp(self) -> None:
-
-        self.example_array = [1, 3, -1, -3, 5, 3, 6, 7]
-
+class TestTask05(unittest.TestCase):
     def test_example(self):
-
+        self.example_array = [1, 3, -1, -3, 5, 3, 6, 7]
         self.assertEqual(find_maximal_subarray_sum([1, 3, -1, -3, 5, 3, 6, 7], 3), 16)
 
 
