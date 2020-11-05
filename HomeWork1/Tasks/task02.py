@@ -6,10 +6,11 @@ Given a cell with "it's a fib sequence" from slideshow,
 We guarantee, that the given sequence contain >= 0 integers inside.
 
 """
-from collections import Sequence
+
+from typing import Sequence
 
 
-def check_fibonacci(data: Sequence) -> bool:
+def check_fibonacci(data: Sequence[int]) -> bool:
 
     if len(data) == 0:
         return False
