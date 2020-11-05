@@ -19,22 +19,22 @@ class TestTask03(unittest.TestCase):
 
     def setUp(self) -> None:
 
-        self.file_maker([i for i in range(10)], "data_test_task03_min1_max9.txt")
+        self.file_maker([i for i in range(4)], "data_test_task03_min1_max9.txt")
 
         self.file_maker(
-            [i for i in range(10)] + [-10] + [i + 10 for i in range(10)],
+            [i for i in range(2)] + [-10] + [i + 10 for i in range(2)],
             "data_test_task03_min-10_max19.txt",
         )
 
-        self.file_maker([1 for _ in range(10)], "data_test_task03_min1_max1.txt")
+        self.file_maker([1 for _ in range(3)], "data_test_task03_min1_max1.txt")
 
     def test_find_maximum_and_minimum(self):
 
         self.assertEqual(
-            find_maximum_and_minimum("data_test_task03_min1_max9.txt"), (1, 9)
+            find_maximum_and_minimum("data_test_task03_min1_max9.txt"), (1, 3)
         )
         self.assertEqual(
-            find_maximum_and_minimum("data_test_task03_min-10_max19.txt"), (-10, 19)
+            find_maximum_and_minimum("data_test_task03_min-10_max19.txt"), (-10, 11)
         )
         self.assertEqual(
             find_maximum_and_minimum("data_test_task03_min1_max1.txt"), (1, 1)
