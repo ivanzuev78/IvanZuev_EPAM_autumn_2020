@@ -1,26 +1,30 @@
 import os
 import unittest
+from typing import Sequence
 
 from HomeWork1.Tasks.task03 import find_maximum_and_minimum
 
 
 class TestTask03(unittest.TestCase):
+
+    files = []
+
+    def file_maker(self, sequence: Sequence[int], filename: str) -> None:
+
+        with open(filename, "w") as f:
+            for i in sequence:
+                f.write(f"{i}\n")
+
+        self.files.append(filename)
+
     def setUp(self) -> None:
 
-        with open("data_test_task03_min1_max9.txt", "w") as f:
-            for i in range(10):
-                f.write(f"{i}\n")
+        self.file_maker([i for i in range(10)], "data_test_task03_min1_max9.txt")
 
-        with open("data_test_task03_min-10_max19.txt", "w") as f:
-            for i in range(10):
-                f.write(f"{i}\n")
-            f.write(f"-10\n")
-            for i in range(10):
-                f.write(f"{i+10}\n")
+        self.file_maker([i for i in range(10)] + [-10] + [i + 10 for i in range(10)],
+                        "data_test_task03_min-10_max19.txt")
 
-        with open("data_test_task03_min1_max1.txt", "w") as f:
-            for i in range(10):
-                f.write(f"1\n")
+        self.file_maker([1 for _ in range(10)], "data_test_task03_min1_max1.txt")
 
     def test_find_maximum_and_minimum(self):
 
@@ -35,9 +39,9 @@ class TestTask03(unittest.TestCase):
         )
 
     def tearDown(self) -> None:
-        os.remove("data_test_task03_min1_max9.txt")
-        os.remove("data_test_task03_min-10_max19.txt")
-        os.remove("data_test_task03_min1_max1.txt")
+
+        for file in self.files:
+            os.remove(file)
 
 
 if __name__ == "__main__":
