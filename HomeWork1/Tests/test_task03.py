@@ -21,8 +21,10 @@ class TestTask03(unittest.TestCase):
 
         self.file_maker([i for i in range(10)], "data_test_task03_min1_max9.txt")
 
-        self.file_maker([i for i in range(10)] + [-10] + [i + 10 for i in range(10)],
-                        "data_test_task03_min-10_max19.txt")
+        self.file_maker(
+            [i for i in range(10)] + [-10] + [i + 10 for i in range(10)],
+            "data_test_task03_min-10_max19.txt",
+        )
 
         self.file_maker([1 for _ in range(10)], "data_test_task03_min1_max1.txt")
 
