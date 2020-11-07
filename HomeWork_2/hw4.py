@@ -18,8 +18,21 @@ val_2 = cache_func(*some)
 assert val_1 is val_2
 
 """
-from collections import Callable
+from collections.abc import Callable
 
 
 def cache(func: Callable) -> Callable:
-    ...
+
+    results = {}
+
+    def wrapper(*args, **kwargs):
+
+        if (*args, *kwargs) in results:
+            return results[(*args, *kwargs)]
+
+        else:
+            result = func(*args, **kwargs)
+            results[(*args, *kwargs)] = result
+            return result
+
+    return wrapper
