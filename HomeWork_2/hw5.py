@@ -8,7 +8,6 @@ it behaves as range function:
 
 import string
 
-a b c d e f g h i j k l m n o p q r s t u v w x y z
 
 assert = custom_range(string.ascii_lowercase, 'g') == ['a', 'b', 'c', 'd', 'e', 'f']
 assert = custom_range(string.ascii_lowercase, 'g', 'p') == ['g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o']
