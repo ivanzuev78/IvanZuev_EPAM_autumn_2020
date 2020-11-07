@@ -14,6 +14,7 @@ assert combinations([1, 2], [3, 4]) == [
     [2, 4],
 ]
 """
+import unittest
 from typing import List, Any, Tuple
 
 
@@ -21,21 +22,12 @@ def combinations(*args: List[Any]) -> List[List]:
 
     list_to_return = []
 
-    if not isinstance(args[0], (list, Tuple)):
-        for i in args:
-            list_to_return.append([i])
-        print(list_to_return)
-        return list_to_return
-    new_args = list(args).pop(-1)
-    # print(args)
-    print('new_args', new_args)
     for i in args[0]:
-        print(i)
-        for end_of_array in combinations(k for k in args[1:]):
-            list_to_return.append([i] + end_of_array)
+        if len(args) == 1:
+            list_to_return.append([i])
+
+        else:
+            for end_of_array in combinations(*args[1:]):
+                list_to_return.append([i] + end_of_array)
 
     return list_to_return
-
-
-if __name__ == '__main__':
-    print(combinations([1, 2], [3, 4]))
