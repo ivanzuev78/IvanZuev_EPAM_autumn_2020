@@ -11,26 +11,25 @@ on:
       - '**.py'
       - '.github/workflows/**'
       - '.flake8'
-      - 'requirements.txt'
+      - 'requirements-dev.txt'
 
 jobs:
   check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Python {% raw %}${{ matrix.python-version }}{% endraw %}
+      - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
           python-version: 3.8
       - name: Install dependencies
         run: |
-          pip install -r requirements-dev.txt
+          pip install -r requirements.txt
       - name: Black check
         run: |
           black . --check
-      - name: Lint with flake8
-        run: |
-          flake8 . --format="::error file=%(path)s,line=%(row)d,col=%(col)d::%(path)s:%(row)d:%(col)d: %(code)s %(text)s"
       - name: Test with pytest
         run: |
-          pytest --cov={{cookiecutter.module_name}}
+          pytest --cov=HomeWork1
+          pytest --cov=HomeWork_2
+          pytest --cov=HomeWork_3
