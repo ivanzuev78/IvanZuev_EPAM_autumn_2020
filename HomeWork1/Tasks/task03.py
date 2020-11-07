@@ -25,7 +25,7 @@ def find_maximum_and_minimum(file_name: str) -> Tuple[int, int]:
             if not max_numb:
                 max_numb = int(line)
                 min_numb = int(line)
-            if int(line) > max_numb:
+            elif int(line) > max_numb:
                 max_numb = int(line)
             elif int(line) < min_numb:
                 min_numb = int(line)
