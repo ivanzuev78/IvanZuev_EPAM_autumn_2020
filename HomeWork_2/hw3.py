@@ -14,8 +14,7 @@ assert combinations([1, 2], [3, 4]) == [
     [2, 4],
 ]
 """
-import unittest
-from typing import List, Any, Tuple
+from typing import List, Any
 
 
 def combinations(*args: List[Any]) -> List[List]:
