@@ -21,12 +21,13 @@ def combinations(*args: List[Any]) -> List[List]:
 
     list_to_return = []
 
-    for i in args[0]:
-        if len(args) == 1:
+    if len(args) == 1:
+        for i in args[0]:
             list_to_return.append([i])
 
-        else:
-            for end_of_array in combinations(*args[1:]):
-                list_to_return.append([i] + end_of_array)
+    else:
+        for i in args[0]:
+            for tail in combinations(*args[1:]):
+                list_to_return.append([i] + tail)
 
     return list_to_return
