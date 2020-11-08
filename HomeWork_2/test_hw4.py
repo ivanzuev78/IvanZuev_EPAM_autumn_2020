@@ -1,4 +1,6 @@
 import time
+from typing import List
+
 from HomeWork_2.hw4 import cache
 
 
@@ -10,6 +12,10 @@ def func(a, b, *args, **kwargs):
         d += 1
 
     return (a ** b) ** 2 * c * d
+
+
+def double(nums: List[int]) -> List[int]:
+    return [x * 2 for x in nums]
 
 
 def test_cache_example():
@@ -49,3 +55,15 @@ def test_cache_check_time():
     time_end = time.time()
 
     assert time_mid - time_start > time_end - time_mid
+
+
+def test_double_cache():
+
+    cached_double = cache(double)
+
+    some_args = 100, 200, 100, 200
+
+    val_1 = cached_double(some_args)
+    val_2 = cached_double(some_args)
+
+    assert val_1 is val_2
