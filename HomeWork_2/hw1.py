@@ -74,13 +74,7 @@ def get_longest_diverse_words(file_path: str) -> List[str]:
 
     text.sort(key=lambda word: len(set(word)), reverse=True)
 
-    list_to_return = []
-
-    for word in text[:10]:
-        word_to_add = ""
-        for letter in word:
-            word_to_add += letter
-        list_to_return.append(word_to_add)
+    list_to_return = ["".join(letter for letter in word) for word in text[:10]]
 
     return list_to_return
 
