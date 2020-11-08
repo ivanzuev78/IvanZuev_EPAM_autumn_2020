@@ -12,6 +12,7 @@ repos:
       - id: isort
         files: 'tests/.*'
 
+
   - repo: https://gitlab.com/pycqa/flake8/
     rev: 3.8.4
     hooks:
