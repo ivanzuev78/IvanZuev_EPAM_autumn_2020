@@ -49,7 +49,7 @@ def reader(file_path: str, output: str) -> List:
                     elif word:
                         parsed_text.append(tuple(word))
                         word = []
-    print(symbols)
+
     if output == "WORDS":
         return parsed_text
     elif output == "SYMBOLS":
