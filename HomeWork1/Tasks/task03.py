@@ -20,6 +20,7 @@ def find_maximum_and_minimum(file_name: str) -> Tuple[int, int]:
 
     max_numb = None
     min_numb = None
+
     with open(file_name) as fi:
         for line in fi:
             if not max_numb:

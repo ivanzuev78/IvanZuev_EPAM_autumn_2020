@@ -40,8 +40,15 @@ class TestTask03(unittest.TestCase):
             find_maximum_and_minimum("data_test_task03_min1_max1.txt"), (1, 1)
         )
 
-    def tearDown(self) -> None:
+    def test_find_maximum_and_minimum_empty_input(self):
 
+        self.file_maker([], "data_test_task03_empty_input.txt")
+
+        self.assertEqual(
+            find_maximum_and_minimum("data_test_task03_empty_input.txt"), (None, None)
+        )
+
+    def tearDown(self) -> None:
         for file in self.files:
             os.remove(file)
 
