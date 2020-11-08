@@ -17,8 +17,32 @@ Input: [2,2,1,1,1,2,2]
 Output: 2, 1
 
 """
+from collections import Counter
 from typing import List, Tuple
 
 
 def major_and_minor_elem(inp: List) -> Tuple[int, int]:
-    ...
+
+    counter = Counter()
+
+    for elem in inp:
+        counter[elem] += 1
+
+    major_elem = counter.most_common(1)[0][0]
+    minor_elem = counter.most_common()[-1][0]
+
+    return major_elem, minor_elem
+
+
+def test_major_and_minor_elem_1():
+
+    input_1 = [2, 2, 1, 1, 1, 2, 2]
+
+    assert major_and_minor_elem(input_1) == (2, 1)
+
+
+def test_major_and_minor_elem_2():
+
+    input_2 = [3, 2, 3]
+
+    assert major_and_minor_elem(input_2) == (3, 2)
