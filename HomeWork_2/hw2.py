@@ -25,23 +25,11 @@ def major_and_minor_elem(inp: List) -> Tuple[int, int]:
 
     counter = Counter()
 
-    # major_elem = None
-    minor_elem = None
-
     for elem in inp:
         counter[elem] += 1
 
     major_elem = counter.most_common(1)[0][0]
     minor_elem = counter.most_common()[-1][0]
-
-    # for elem in counter:
-    #     if major_elem is None:
-    #         major_elem = elem
-    #         minor_elem = elem
-    #     elif counter[elem] > counter[major_elem]:
-    #         major_elem = elem
-    #     elif counter[elem] < counter[minor_elem]:
-    #         minor_elem = elem
 
     return major_elem, minor_elem
 
