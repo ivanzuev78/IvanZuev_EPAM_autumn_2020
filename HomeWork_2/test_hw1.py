@@ -44,21 +44,25 @@ def test_count_punctuation_chars():
 
 
 def test_count_non_ascii_chars():
-    text = ["\\u00bbJetzt und hier\\u00ab \\u00bb"]
+    text = ["\\u00bbJetzt und фыва hier\\u00ab \\u00bb"]
 
     create_txt_file(text, "test_text.txt")
 
-    assert count_non_ascii_chars("test_text.txt") == 3
+    assert count_non_ascii_chars("test_text.txt") == 7
 
     os.remove("test_text.txt")
 
 
 def test_get_most_common_non_ascii_char():
 
-    text = ["\\u00bbJetzt und hier\\u00ab \\u00bb"]
+    text = ["\\u00bbJetzt und ввввв \\u00ab \\u00bb"]
+    text_2 = ["\\u00bbJetzt und  \\u00ab \\u00bb"]
 
     create_txt_file(text, "test_text.txt")
+    create_txt_file(text_2, "test_text_2.txt")
 
-    assert get_most_common_non_ascii_char("test_text.txt") == "\\u00bb"
+    assert get_most_common_non_ascii_char("test_text.txt") == "в"
+    assert get_most_common_non_ascii_char("test_text_2.txt") == "\\u00bb"
 
     os.remove("test_text.txt")
+    os.remove("test_text_2.txt")
