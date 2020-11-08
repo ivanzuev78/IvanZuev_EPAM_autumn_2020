@@ -14,6 +14,9 @@ from typing import List
 
 def find_maximal_subarray_sum(nums: List[int], k: int) -> int:
 
+    if len(nums) == 0:
+        raise TypeError("Sequence can't be empty.")
+
     max_result = nums[0]
     for sub_array_len in range(1, k + 1):
         for index_of_nums in range(len(nums) - sub_array_len + 1):
