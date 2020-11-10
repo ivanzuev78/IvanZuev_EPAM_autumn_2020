@@ -29,6 +29,4 @@ jobs:
           black . --check
       - name: Test with pytest
         run: |
-          pytest --cov=HomeWork1
-          pytest --cov=HomeWork_2
-          pytest --cov=HomeWork_3
+          python -m pytest
