@@ -61,7 +61,7 @@ def test_double_cache():
 
     cached_double = cache(double)
 
-    some_args = 100, 200, 100, 200
+    some_args = [100, 200, 100, 200]
 
     val_1 = cached_double(some_args)
     val_2 = cached_double(some_args)

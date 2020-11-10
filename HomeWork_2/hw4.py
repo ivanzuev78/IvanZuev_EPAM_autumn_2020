@@ -21,6 +21,15 @@ assert val_1 is val_2
 from typing import Callable
 
 
+def object_is_cacheable(arg):
+
+    try:
+        hash(arg)
+        return True
+    except:
+        return False
+
+
 def cache(func: Callable) -> Callable:
 
     results = {}
