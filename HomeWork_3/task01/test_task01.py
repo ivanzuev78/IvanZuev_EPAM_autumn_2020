@@ -9,21 +9,12 @@ def func(a, b):
     return (a ** b) ** 2
 
 
-def test_cache():
+def test_cache_val1_is_val_2():
+    some_args = 100, 200
 
-    some_args = 100000, 200000
+    val_1 = func(*some_args)
+    val_2 = func(*some_args)
+    val_3 = func(*some_args)
+    val_4 = func(*some_args)
 
-    time_1 = time.time()
-    func(*some_args)
-    time_2 = time.time()
-    func(*some_args)
-    time_3 = time.time()
-    func(*some_args)
-    time_4 = time.time()
-    func(*some_args)
-    time_5 = time.time()
-
-    assert time_2 - time_1 > 0
-    assert time_3 - time_2 == 0
-    assert time_4 - time_3 == 0
-    assert time_5 - time_4 > 0
+    assert val_1 is val_2 is val_3 is not val_4
