@@ -1,5 +1,5 @@
 # I decided to write a code that generates data filtering object from a list of keyword parameters:
-from typing import Callable, List
+from typing import Callable, List, Hashable
 
 
 class Filter:
@@ -25,7 +25,7 @@ def make_filter(**keywords: dict) -> Filter:
     Generate filter object for specified keywords
     """
 
-    def keyword_filter_func(key_to_check):
+    def keyword_filter_func(key_to_check: Hashable):
         def wrapper(input_dict: dict) -> bool:
 
             if (
