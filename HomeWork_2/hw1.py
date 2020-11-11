@@ -40,7 +40,7 @@ def reader(file_path: str, output: str) -> List:
                     continue
 
                 elif letter == "\\":
-                    letter = unicode_char_replacer(line[index + 2: index + 6])
+                    letter = unicode_char_replacer(line[index + 2 : index + 6])
                     pass_unicode_extra_letters += 5
                     word.append(letter)
                     symbols.append(letter)
