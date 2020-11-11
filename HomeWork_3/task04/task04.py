@@ -25,7 +25,3 @@ def is_armstrong(number: int) -> bool:
         if number >= 0
         else False
     )
-
-
-# assert is_armstrong(153) == True, "Is Armstrong number"
-# assert is_armstrong(10) == False, "Is not Armstrong number"
