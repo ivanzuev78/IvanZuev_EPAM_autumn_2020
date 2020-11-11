@@ -6,8 +6,17 @@ Given a file containing text. Complete using only default collections:
     4) Count every non ascii char
     5) Find most common non ascii char for document
 """
+import json
 import string
 from typing import List
+
+
+def unicode_char_replacer(char: str) -> str:
+
+    with open("dict_unicode_char_replacer.txt", "r") as f:
+        text_dict = json.load(f)
+
+    return text_dict[char]
 
 
 def reader(file_path: str, output: str) -> List:
@@ -31,7 +40,7 @@ def reader(file_path: str, output: str) -> List:
                     continue
 
                 elif letter == "\\":
-                    letter = line[index : index + 6]
+                    letter = unicode_char_replacer(line[index + 2: index + 6])
                     pass_unicode_extra_letters += 5
                     word.append(letter)
                     symbols.append(letter)
@@ -46,7 +55,7 @@ def reader(file_path: str, output: str) -> List:
                         break
 
                     elif word:
-                        parsed_text.append(tuple(word))
+                        parsed_text.append(word)
                         word = []
 
     if output == "WORDS":
@@ -63,17 +72,13 @@ def read_letters(file_path: str) -> List[str]:
     return reader(file_path, output="SYMBOLS")
 
 
-def is_ascii(letter: str) -> bool:
-    return False if len(letter) > 1 or not letter.isascii() else True
-
-
 # --------------------- tasks funcs ---------------------------
 def get_longest_diverse_words(file_path: str) -> List[str]:
 
     return [
         "".join(letter for letter in word)
         for word in sorted(
-            list(set(read_words(file_path))),
+            list(read_words(file_path)),
             key=lambda word: len(set(word)),
             reverse=True,
         )[:10]
@@ -96,7 +101,7 @@ def get_rarest_char(file_path: str) -> str:
     for i in counter:
         if rarest_char is None:
             rarest_char = i
-        if counter[i] < counter[rarest_char]:
+        elif counter[i] < counter[rarest_char]:
             rarest_char = i
 
     return rarest_char
@@ -108,15 +113,8 @@ def count_punctuation_chars(file_path: str) -> int:
 
 
 def count_non_ascii_chars(file_path: str) -> int:
-    symbols = reader(file_path, output="SYMBOLS")
 
-    counter = 0
-
-    for i in symbols:
-        if not is_ascii(i):
-            counter += 1
-
-    return counter
+    return sum(1 for i in reader(file_path, output="SYMBOLS") if not i.isascii())
 
 
 def get_most_common_non_ascii_char(file_path: str) -> str:
@@ -126,7 +124,7 @@ def get_most_common_non_ascii_char(file_path: str) -> str:
 
     for i in reader(file_path, output="SYMBOLS"):
 
-        if not is_ascii(i):
+        if not i.isascii():
             if i not in counter:
                 counter[i] = 0
             counter[i] += 1

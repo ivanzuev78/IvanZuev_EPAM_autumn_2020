@@ -95,7 +95,7 @@ def test_get_most_common_non_ascii_char(
 ):
 
     assert get_most_common_non_ascii_char("test_text.txt") == "в"
-    assert get_most_common_non_ascii_char("test_text_2.txt") == "\\u00bb"
+    assert get_most_common_non_ascii_char("test_text_2.txt") == "\u00bb"
 
 
 @pytest.fixture
