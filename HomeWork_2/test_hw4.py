@@ -42,21 +42,6 @@ def test_cache_kwargs():
     assert val_1 is val_2
 
 
-def test_cache_check_time():
-
-    cache_func = cache(func)
-
-    some_args = 100000, 200000
-
-    time_start = time.time()
-    cache_func(*some_args)
-    time_mid = time.time()
-    cache_func(*some_args)
-    time_end = time.time()
-
-    assert time_mid - time_start > time_end - time_mid
-
-
 def test_double_cache():
 
     cached_double = cache(double)
