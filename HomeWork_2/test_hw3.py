@@ -30,3 +30,8 @@ def test_combinations_empty_input():
 def test_combinations_str():
 
     assert combinations("12", "34") == [["1", "3"], ["1", "4"], ["2", "3"], ["2", "4"]]
+
+
+def test_combinations_different_types():
+
+    assert combinations([1, "s"], "wo") == [[1, "w"], [1, "o"], ["s", "w"], ["s", "o"]]
