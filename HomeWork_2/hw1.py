@@ -89,11 +89,9 @@ def get_rarest_char(file_path: str) -> str:
 
     counter = {}
 
-    symbols = read_letters(file_path)
-
     rarest_char = None
 
-    for i in symbols:
+    for i in read_letters(file_path):
         if i not in counter:
             counter[i] = 0
         counter[i] += 1
