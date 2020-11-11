@@ -14,30 +14,29 @@ assert = custom_range(string.ascii_lowercase, 'g', 'p') == ['g', 'h', 'i', 'j', 
 assert = custom_range(string.ascii_lowercase, 'p', 'g', -2) == ['p', 'n', 'l', 'j', 'h']
 
 """
-from typing import List
+from typing import List, Sequence, Any
 
 
-def custom_range(*args) -> List[str]:
+def custom_range(sequence: Sequence, *args) -> List[Any]:
 
-    sequence, *params = args
     step = 1
     first_elem = 0
-    if isinstance(args[-1], int):
-        *params, step = params
 
-    if len(params) == 1:
-        last_elem = sequence.index(params[0])
-    elif len(params) == 2:
-        last_elem = sequence.index(params[1])
-        first_elem = sequence.index(params[0])
-    elif len(params) == 0:
-        raise TypeError(
-            f"custom_range() needs at least 1 argument, that contains in the sequence"
-        )
+    if len(args) == 0:
+        return [i for i in sequence]
 
-    else:
-        raise TypeError(
-            f"custom_range() takes 2 to 4 arguments but {len(args)} were given"
-        )
+    if len(args) == 1:
+        last_elem = sequence.index(args[0])
+    elif len(args) == 2:
+        last_elem = sequence.index(args[1])
+        first_elem = sequence.index(args[0])
+    elif len(args) == 3:
+        if not isinstance(args[2], int):
+            raise TypeError("Step must be integer!")
+        last_elem = sequence.index(args[1])
+        first_elem = sequence.index(args[0])
+        step = args[2]
+    elif len(args) > 3:
+        raise IndexError("Too many arguments")
 
     return [i for i in sequence[first_elem:last_elem:step]]

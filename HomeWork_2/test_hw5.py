@@ -32,3 +32,8 @@ def test_custom_range_example_3():
         "j",
         "h",
     ]
+
+
+def test_custom_range_numbs():
+
+    assert custom_range(range(10), 1, 3, 1) == [1, 2]
