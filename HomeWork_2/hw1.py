@@ -6,15 +6,15 @@ Given a file containing text. Complete using only default collections:
     4) Count every non ascii char
     5) Find most common non ascii char for document
 """
-import json
 import string
 from typing import List
 
 
 def unicode_char_replacer(char: str) -> str:
 
-    with open("dict_unicode_char_replacer.txt", "r") as f:
-        text_dict = json.load(f)
+    text_dict = {'00dc': 'Ü', '00bb': '»', '00ab': '«', '2014': '—', '00df': 'ß', '00fc': 'ü',
+                 '00e4': 'ä', '00f6': 'ö', '203a': '›', '2039': '‹', '00c4': 'Ä', '00d6': 'Ö',
+                 '00e9': 'é', '00ee': 'î', '2019': '’'}
 
     return text_dict[char]
 
