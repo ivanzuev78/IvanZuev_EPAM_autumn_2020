@@ -25,6 +25,6 @@ def test_calculate_numb_of_threds_less_than_numb_of_values():
 
 def test_calculate_lots_of_threads():
 
-    sum_fast = fast_calculate([i for i in range(10**4)], numb_of_threads=10**4)
+    sum_fast = fast_calculate([i for i in range(10 ** 4)], numb_of_threads=10 ** 4)
 
     assert True
