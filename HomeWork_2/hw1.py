@@ -58,7 +58,7 @@ def get_longest_diverse_words(file_path: str) -> List[str]:
     return [
         "".join(letter for letter in word)
         for word in sorted(
-            list(read_words(file_path)),
+            read_words(file_path),
             key=lambda word: len(set(word)),
             reverse=True,
         )[:10]
