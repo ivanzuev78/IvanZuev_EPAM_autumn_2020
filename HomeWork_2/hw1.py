@@ -10,29 +10,6 @@ import string
 from typing import List
 
 
-def unicode_char_replacer(char: str) -> str:
-
-    text_dict = {
-        "00dc": "Ü",
-        "00bb": "»",
-        "00ab": "«",
-        "2014": "—",
-        "00df": "ß",
-        "00fc": "ü",
-        "00e4": "ä",
-        "00f6": "ö",
-        "203a": "›",
-        "2039": "‹",
-        "00c4": "Ä",
-        "00d6": "Ö",
-        "00e9": "é",
-        "00ee": "î",
-        "2019": "’",
-    }
-
-    return text_dict[char]
-
-
 def reader(file_path: str, output: str) -> List:
     """
     output: ['WORDS', 'SYMBOLS']
@@ -44,22 +21,12 @@ def reader(file_path: str, output: str) -> List:
     parsed_text = []
     symbols = []
     pass_unicode_extra_letters = 0
-    with open(file_path, "r") as file:
+    with open(file_path, "r", encoding="unicode-escape") as file:
 
         for line in file:
             for index, letter in enumerate(line):
 
-                if pass_unicode_extra_letters:
-                    pass_unicode_extra_letters -= 1
-                    continue
-
-                elif letter == "\\":
-                    letter = unicode_char_replacer(line[index + 2 : index + 6])
-                    pass_unicode_extra_letters += 5
-                    word.append(letter)
-                    symbols.append(letter)
-
-                elif letter.isalpha():
+                if letter.isalpha():
                     word.append(letter)
                     symbols.append(letter)
 
@@ -86,7 +53,6 @@ def read_letters(file_path: str) -> List[str]:
     return reader(file_path, output="SYMBOLS")
 
 
-# --------------------- tasks funcs ---------------------------
 def get_longest_diverse_words(file_path: str) -> List[str]:
 
     return [

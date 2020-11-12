@@ -7,7 +7,7 @@ from HomeWork_2.hw1 import *
 
 def create_txt_file(text: List[str], filename):
 
-    with open(filename, "w") as file:
+    with open(filename, "w", encoding="unicode-escape") as file:
         for i in text:
             file.write(i + "\n")
 
@@ -21,7 +21,7 @@ def fixture_create_txt_file_for_test_get_longest_diverse_words():
     create_txt_file(
         text_nununique_symbols + text_unique_symbols_in_10_words, "test_text.txt"
     )
-    yield None
+    yield
     os.remove("test_text.txt")
 
 
@@ -65,7 +65,7 @@ def test_count_punctuation_chars(
 
 @pytest.fixture
 def fixture_create_txt_file_for_test_count_non_ascii_chars():
-    text = ["\\u00bbJetzt und фыва hier\\u00ab \\u00bb"]
+    text = ["\u00bbJetzt und фыва hier\u00ab \u00bb"]
     create_txt_file(text, "test_text.txt")
     yield None
     os.remove("test_text.txt")
@@ -78,8 +78,8 @@ def test_count_non_ascii_chars(fixture_create_txt_file_for_test_count_non_ascii_
 @pytest.fixture
 def fixture_create_txt_file_for_test_get_most_common_non_ascii_char():
 
-    text = ["\\u00bbJetzt und ввввв \\u00ab \\u00bb"]
-    text_2 = ["\\u00bbJetzt und  \\u00ab \\u00bb"]
+    text = ["\u00bbJetzt und ввввв \u00ab \u00bb"]
+    text_2 = ["\u00bbJetzt und  \u00ab \u00bb"]
 
     create_txt_file(text, "test_text.txt")
     create_txt_file(text_2, "test_text_2.txt")
