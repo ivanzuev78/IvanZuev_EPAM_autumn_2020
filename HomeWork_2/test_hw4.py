@@ -30,14 +30,26 @@ def test_cache_example():
     assert val_1 is val_2
 
 
-def test_cache_kwargs():
+def test_cache_same_args_different_kwargs():
+
+    cache_func = cache(func)
+
+    some = 100, 200
+
+    val_1 = cache_func(*some, s=10)
+    val_2 = cache_func(*some, x=10)
+
+    assert val_1 is not val_2
+
+
+def test_cache_same_args_kwargs():
 
     cache_func = cache(func)
 
     some_args = 100, 200
 
-    val_1 = cache_func(*some_args, s=90)
-    val_2 = cache_func(*some_args, s=90)
+    val_1 = cache_func(*some_args, s=10)
+    val_2 = cache_func(*some_args, s=10)
 
     assert val_1 is val_2
 
