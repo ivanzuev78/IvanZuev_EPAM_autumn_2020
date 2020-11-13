@@ -31,9 +31,8 @@ def test_specified_filter_example(data_from_example_of_the_task):
     ) == [data_from_example_of_the_task[1]]
 
 
-@pytest.fixture
-def some_data_to_test_filter():
-    input_ = [
+def test_specified_filter_no_one_in_input_are_good():
+    input_data = [
         {
             "name": "Bill",
             "last_name": "Gilbert",
@@ -46,17 +45,24 @@ def some_data_to_test_filter():
         },
         {"name": "Bill", "last_name": "Wodoomagic", "type": "person"},
     ]
-    return input_
+
+    assert make_filter(name="Bill", type="bird").apply(input_data) == []
 
 
-def test_specified_filter_no_one_in_input_are_good(some_data_to_test_filter):
+def test_specified_filter_all_in_input_are_good():
 
-    assert make_filter(name="Bill", type="bird").apply(some_data_to_test_filter) == []
+    input_data = [
+        {
+            "name": "Bill",
+            "last_name": "Gilbert",
+            "occupation": "was here",
+            "type": "person",
+        },
+        {
+            "name": "Bill",
+            "last_name": "Paper",
+        },
+        {"name": "Bill", "last_name": "Wodoomagic", "type": "person"},
+    ]
 
-
-def test_specified_filter_all_in_input_are_good(some_data_to_test_filter):
-
-    assert (
-        make_filter(name="Bill").apply(some_data_to_test_filter)
-        == some_data_to_test_filter
-    )
+    assert make_filter(name="Bill").apply(input_data) == input_data
