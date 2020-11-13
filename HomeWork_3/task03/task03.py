@@ -1,5 +1,5 @@
 # I decided to write a code that generates data filtering object from a list of keyword parameters:
-from typing import Callable, List, Hashable, Optional, Any, Iterable
+from typing import Callable, Hashable, Any, Iterable
 
 
 class Filter:
