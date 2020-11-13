@@ -4,7 +4,7 @@ from typing import Callable, List, Hashable, Optional, Any, Iterable
 
 class Filter:
     """
-    Helper filter class. Accepts a list of single-argument
+    Helper filter class. Accepts single-argument
     functions that return True if object in list conforms to some criteria
     """
 
@@ -35,10 +35,7 @@ def make_filter(**keywords: Any) -> Filter:
 
         return wrapper
 
-    filter_funcs = []
-
-    for keyword in keywords:
-        filter_funcs.append(keyword_filter_func(keyword))
+    filter_funcs = [keyword_filter_func(keyword) for keyword in keywords]
 
     return Filter(*filter_funcs)
 

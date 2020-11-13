@@ -11,8 +11,8 @@ def test_filter():
 
 
 @pytest.fixture
-def sample_data():
-    input = [
+def data_from_example_of_the_task():
+    input_ = [
         {
             "name": "Bill",
             "last_name": "Gilbert",
@@ -21,17 +21,19 @@ def sample_data():
         },
         {"is_dead": True, "kind": "parrot", "type": "bird", "name": "polly"},
     ]
-    yield input
+    return input_
 
 
-def test_specified_filter_example(sample_data):
+def test_specified_filter_example(data_from_example_of_the_task):
 
-    assert make_filter(name="polly", type="bird").apply(sample_data) == [sample_data[1]]
+    assert make_filter(name="polly", type="bird").apply(
+        data_from_example_of_the_task
+    ) == [data_from_example_of_the_task[1]]
 
 
 @pytest.fixture
-def specified_filter_input():
-    input = [
+def some_data_to_test_filter():
+    input_ = [
         {
             "name": "Bill",
             "last_name": "Gilbert",
@@ -44,16 +46,17 @@ def specified_filter_input():
         },
         {"name": "Bill", "last_name": "Wodoomagic", "type": "person"},
     ]
-    yield input
+    return input_
 
 
-def test_specified_filter__no_one_in_input_are_good(specified_filter_input):
+def test_specified_filter_no_one_in_input_are_good(some_data_to_test_filter):
 
-    assert make_filter(name="Bill", type="bird").apply(specified_filter_input) == []
+    assert make_filter(name="Bill", type="bird").apply(some_data_to_test_filter) == []
 
 
-def test_specified_filter_all_in_input_are_good(specified_filter_input):
+def test_specified_filter_all_in_input_are_good(some_data_to_test_filter):
 
     assert (
-        make_filter(name="Bill").apply(specified_filter_input) == specified_filter_input
+        make_filter(name="Bill").apply(some_data_to_test_filter)
+        == some_data_to_test_filter
     )
