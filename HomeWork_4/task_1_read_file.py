@@ -26,5 +26,6 @@ You will learn:
 """
 
 
-def read_magic_number(path: str) -> bool:
-    ...
+def read_magic_number(path: str):
+    with open(path, "r") as f:
+        return True if 1 <= float(f.readline()) < 3 else False
