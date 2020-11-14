@@ -27,19 +27,15 @@ You will learn:
 import os.path
 
 
-def string_is_digit(input_from_file: str) -> bool:
+def transform_string_to_digit(input_from_file: str) -> float:
     try:
-        float(input_from_file)
-        return True
+        return float(input_from_file)
     except:
-        return False
+        raise ValueError("First line must be int or float!")
 
 
 def read_magic_number(path: str):
     if os.path.isfile(path):
         with open(path, "r") as f:
-            first_line = f.readline()
-            if not string_is_digit(first_line):
-                raise ValueError("First line must be int or float!")
-            return True if 1 <= float(first_line) < 3 else False
+            return True if 1 <= transform_string_to_digit(f.readline()) < 3 else False
     raise ValueError(f'File "{path}" doesn\'t exists.')

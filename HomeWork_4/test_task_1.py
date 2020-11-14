@@ -10,9 +10,7 @@ def input_int_1_true():
     name_of_file = "data.txt"
     with open(name_of_file, "w") as file:
         file.write("1")
-
     yield name_of_file
-
     os.remove(name_of_file)
 
 
@@ -21,9 +19,7 @@ def input_int_3_false():
     name_of_file = "data.txt"
     with open(name_of_file, "w") as file:
         file.write("3")
-
     yield name_of_file
-
     os.remove(name_of_file)
 
 
@@ -32,9 +28,7 @@ def input_float_2dot718281_true():
     name_of_file = "data.txt"
     with open(name_of_file, "w") as file:
         file.write("2.718281")
-
     yield name_of_file
-
     os.remove(name_of_file)
 
 
@@ -43,9 +37,7 @@ def input_text_exception():
     name_of_file = "data.txt"
     with open(name_of_file, "w") as file:
         file.write("it is not a number")
-
     yield name_of_file
-
     os.remove(name_of_file)
 
 
@@ -54,9 +46,7 @@ def input_int_out_of_range():
     name_of_file = "data.txt"
     with open(name_of_file, "w") as file:
         file.write("42")
-
     yield name_of_file
-
     os.remove(name_of_file)
 
 
