@@ -7,75 +7,82 @@ from HomeWork_4.task_1_read_file import read_magic_number
 
 @pytest.fixture
 def input_int_1_true():
-    with open("data.txt", "w") as file:
+    name_of_file = "data.txt"
+    with open(name_of_file, "w") as file:
         file.write("1")
 
-    yield
+    yield name_of_file
 
-    os.remove("data.txt")
+    os.remove(name_of_file)
 
 
 @pytest.fixture
 def input_int_3_false():
-    with open("data.txt", "w") as file:
+    name_of_file = "data.txt"
+    with open(name_of_file, "w") as file:
         file.write("3")
 
-    yield
+    yield name_of_file
 
-    os.remove("data.txt")
+    os.remove(name_of_file)
 
 
 @pytest.fixture
 def input_float_2dot718281_true():
-    with open("data.txt", "w") as file:
+    name_of_file = "data.txt"
+    with open(name_of_file, "w") as file:
         file.write("2.718281")
 
-    yield
+    yield name_of_file
 
-    os.remove("data.txt")
+    os.remove(name_of_file)
 
 
 @pytest.fixture
 def input_text_exception():
-    with open("data.txt", "w") as file:
+    name_of_file = "data.txt"
+    with open(name_of_file, "w") as file:
         file.write("it is not a number")
 
-    yield
+    yield name_of_file
 
-    os.remove("data.txt")
+    os.remove(name_of_file)
 
 
 @pytest.fixture
 def input_int_out_of_range():
-    with open("data.txt", "w") as file:
+    name_of_file = "data.txt"
+    with open(name_of_file, "w") as file:
         file.write("42")
 
-    yield
+    yield name_of_file
 
-    os.remove("data.txt")
+    os.remove(name_of_file)
 
 
 def test_read_magic_number_input_int_numb_1(input_int_1_true):
-
-    assert read_magic_number("data.txt") is True
+    assert read_magic_number(input_int_1_true) is True
 
 
 def test_read_magic_number_input_int_numb_3(input_int_3_false):
-
-    assert read_magic_number("data.txt") is False
+    assert read_magic_number(input_int_3_false) is False
 
 
 def test_read_magic_number_input_float_2dot718281(input_float_2dot718281_true):
-
-    assert read_magic_number("data.txt") is True
+    assert read_magic_number(input_float_2dot718281_true) is True
 
 
 def test_read_magic_number_input_out_of_range(input_int_out_of_range):
-
-    assert read_magic_number("data.txt") is False
+    assert read_magic_number(input_int_out_of_range) is False
 
 
 def test_read_magic_number_input_text(input_text_exception):
+    with pytest.raises(ValueError, match="First line must be int or float!"):
+        read_magic_number(input_text_exception)
 
-    with pytest.raises(ValueError):
-        read_magic_number("data.txt")
+
+def test_read_magic_number_file_doesnt_exists():
+    with pytest.raises(
+        ValueError, match='File "non-existing_file.txt" doesn\'t exists.'
+    ):
+        read_magic_number("non-existing_file.txt")

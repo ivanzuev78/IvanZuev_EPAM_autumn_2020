@@ -24,8 +24,22 @@ You will learn:
 *** https://docs.python.org/3/tutorial/errors.html#handling-exceptions
 **** https://docs.python.org/3/tutorial/errors.html#raising-exceptions
 """
+import os.path
+
+
+def string_is_digit(input_from_file: str) -> bool:
+    try:
+        float(input_from_file)
+        return True
+    except:
+        return False
 
 
 def read_magic_number(path: str):
-    with open(path, "r") as f:
-        return True if 1 <= float(f.readline()) < 3 else False
+    if os.path.isfile(path):
+        with open(path, "r") as f:
+            first_line = f.readline()
+            if not string_is_digit(first_line):
+                raise ValueError("First line must be int or float!")
+            return True if 1 <= float(first_line) < 3 else False
+    raise ValueError(f'File "{path}" doesn\'t exists.')
