@@ -27,6 +27,8 @@ import sys
 
 
 def my_precious_logger(text: str):
+    if not isinstance(text, str):
+        raise TypeError(f"Input object must be  <class 'str'>, not {type(text)}")
     if text[:5] == "error":
         sys.stderr.write(text)
     else:
