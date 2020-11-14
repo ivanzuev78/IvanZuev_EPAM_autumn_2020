@@ -40,14 +40,20 @@ def fizzbuzz(n: int) -> List[str]:
     >>> fizzbuzz(16)
     ['1', '2', 'fizz', '4', 'buzz', 'fizz', '7', '8', 'fizz', 'buzz', '11', 'fizz', '13', '14', 'fizzbuzz', '16']
 
+    >>> fizzbuzz(-4)
+    Traceback (most recent call last):
+        ...
+    ValueError: Input must be positive integer.
+
     Instruction:
      - Install Python 3.8 (https://www.python.org/downloads/)
-     - Install pytest `pip install pytest`
      - Clone the repository (https://github.com/ivanzuev78/IvanZuev_EPAM_autumn_2020)
      - Checkout branch (HW_4_task_4)
      - Open terminal
      - Run doctest 'python -m doctest -v HomeWork_4/task_4_doctest.py'
     """
+    if not isinstance(n, int) or n < 1:
+        raise ValueError("Input must be positive integer.")
 
     list_to_return = []
     for i in range(1, n + 1):
