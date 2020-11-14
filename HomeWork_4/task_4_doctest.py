@@ -25,8 +25,6 @@ You will learn:
  - how to write instructions
 
 
->>> fizzbuzz(5)
-["1", "2", "fizz", "4", "buzz"]
 
 * https://en.wikipedia.org/wiki/Fizz_buzz
 ** Энциклопедия профессора Фортрана page 14, 15, "Робот Фортран, чисть картошку!"
@@ -35,4 +33,30 @@ from typing import List
 
 
 def fizzbuzz(n: int) -> List[str]:
-    pass
+    """
+    >>> fizzbuzz(5)
+    ['1', '2', 'fizz', '4', 'buzz']
+
+    >>> fizzbuzz(16)
+    ['1', '2', 'fizz', '4', 'buzz', 'fizz', '7', '8', 'fizz', 'buzz', '11', 'fizz', '13', '14', 'fizzbuzz', '16']
+
+     - Install Python 3.8 (https://www.python.org/downloads/)
+     - Install pytest `pip install pytest`
+     - Clone the repository (https://github.com/ivanzuev78/IvanZuev_EPAM_autumn_2020)
+     - Checkout branch (HW_4_task_4)
+     - Open terminal
+
+
+
+    """
+    list_to_return = []
+    for i in range(1, n + 1):
+        if i % 15 == 0:
+            list_to_return.append("fizzbuzz")
+        elif i % 5 == 0:
+            list_to_return.append("buzz")
+        elif i % 3 == 0:
+            list_to_return.append("fizz")
+        else:
+            list_to_return.append(str(i))
+    return list_to_return
