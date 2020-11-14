@@ -10,9 +10,9 @@ def test_filter():
     ).apply([-4, -3, 0, 1, 2, 3, 4]) == [2, 4]
 
 
-@pytest.fixture
-def data_from_example_of_the_task():
-    input_ = [
+def test_specified_filter_example():
+
+    input_data = [
         {
             "name": "Bill",
             "last_name": "Gilbert",
@@ -21,14 +21,8 @@ def data_from_example_of_the_task():
         },
         {"is_dead": True, "kind": "parrot", "type": "bird", "name": "polly"},
     ]
-    return input_
 
-
-def test_specified_filter_example(data_from_example_of_the_task):
-
-    assert make_filter(name="polly", type="bird").apply(
-        data_from_example_of_the_task
-    ) == [data_from_example_of_the_task[1]]
+    assert make_filter(name="polly", type="bird").apply(input_data) == [input_data[1]]
 
 
 def test_specified_filter_no_one_in_input_are_good():
@@ -66,3 +60,36 @@ def test_specified_filter_all_in_input_are_good():
     ]
 
     assert make_filter(name="Bill").apply(input_data) == input_data
+
+
+def test_specified_filter_empty_input():
+
+    assert make_filter(filter_param="Sorry, but it is empty...").apply([]) == []
+
+
+def test_specified_filter_returns_part_of_the_input():
+
+    input_data = [
+        {
+            "name": "Frodo Baggins",
+            "race": "hobbit",
+        },
+        {
+            "name": "Bilbo Baggins",
+            "race": "hobbit",
+        },
+        {
+            "name": "Aragorn",
+            "race": "man",
+        },
+        {
+            "name": "Legolas",
+            "race": "elf",
+        },
+        {
+            "name": "Gimli",
+            "race": "Dwarf",
+        },
+    ]
+
+    assert make_filter(race="hobbit").apply(input_data) == input_data[:2]
