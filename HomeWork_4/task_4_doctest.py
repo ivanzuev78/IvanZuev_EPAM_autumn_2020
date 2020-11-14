@@ -40,15 +40,15 @@ def fizzbuzz(n: int) -> List[str]:
     >>> fizzbuzz(16)
     ['1', '2', 'fizz', '4', 'buzz', 'fizz', '7', '8', 'fizz', 'buzz', '11', 'fizz', '13', '14', 'fizzbuzz', '16']
 
+    Instruction:
      - Install Python 3.8 (https://www.python.org/downloads/)
      - Install pytest `pip install pytest`
      - Clone the repository (https://github.com/ivanzuev78/IvanZuev_EPAM_autumn_2020)
      - Checkout branch (HW_4_task_4)
      - Open terminal
-
-
-
+     - Run doctest 'python -m doctest -v HomeWork_4/task_4_doctest.py'
     """
+
     list_to_return = []
     for i in range(1, n + 1):
         if i % 15 == 0:
@@ -59,4 +59,5 @@ def fizzbuzz(n: int) -> List[str]:
             list_to_return.append("fizz")
         else:
             list_to_return.append(str(i))
+
     return list_to_return
