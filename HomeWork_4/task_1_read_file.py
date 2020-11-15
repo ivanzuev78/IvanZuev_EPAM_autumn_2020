@@ -29,9 +29,9 @@ import os.path
 
 def transform_string_to_digit(input_from_file: str) -> float:
     try:
-        return float(input_from_file)
+        return int(input_from_file)
     except:
-        raise ValueError("First line must be int or float!")
+        raise ValueError("First line must be integer!")
 
 
 def read_magic_number(path: str):

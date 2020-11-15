@@ -59,7 +59,8 @@ def test_read_magic_number_input_int_numb_3(input_int_3_false):
 
 
 def test_read_magic_number_input_float_2dot718281(input_float_2dot718281_true):
-    assert read_magic_number(input_float_2dot718281_true) is True
+    with pytest.raises(ValueError, match="First line must be integer!"):
+        read_magic_number(input_float_2dot718281_true)
 
 
 def test_read_magic_number_input_out_of_range(input_int_out_of_range):
@@ -67,7 +68,7 @@ def test_read_magic_number_input_out_of_range(input_int_out_of_range):
 
 
 def test_read_magic_number_input_text(input_text_exception):
-    with pytest.raises(ValueError, match="First line must be int or float!"):
+    with pytest.raises(ValueError, match="First line must be integer!"):
         read_magic_number(input_text_exception)
 
 
