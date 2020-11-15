@@ -3,12 +3,12 @@ Write a function that will receive a string and write it to stderr
 if line starts with "error" and to the stdout otherwise.
 
 
->>> my_precious_logger("error: file not found")
+# >>> my_precious_logger("error: file not found")
 # stderr
 'error: file not found'
 
 
->>> my_precious_logger("OK")
+# >>> my_precious_logger("OK")
 # stdout
 'OK'
 
@@ -23,7 +23,13 @@ You will learn:
 
 
 """
+import sys
 
 
 def my_precious_logger(text: str):
-    pass
+    if not isinstance(text, str):
+        raise TypeError(f"Input object must be  <class 'str'>, not {type(text)}")
+    if text[:5] == "error":
+        sys.stderr.write(text)
+    else:
+        sys.stdout.write(text)
