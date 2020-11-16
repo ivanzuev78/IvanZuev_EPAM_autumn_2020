@@ -12,14 +12,21 @@ Definition of done:
  - function has tests
 
 
->>> list(fizzbuzz(5))
-["1", "2", "fizz", "4", "buzz"]
+# >>> list(fizzbuzz(5))
+['1', '2', 'fizz', '4', 'buzz']
 
 * https://en.wikipedia.org/wiki/Fizz_buzz
 ** https://www.youtube.com/watch?v=NSzsYWckGd4
 """
-from typing import List, Generator
+from itertools import cycle
+from typing import Generator
 
 
-def fizzbuzz(n: int) -> Generator[str]:
-    pass
+def fizzbuzz(numb: int) -> Generator:
+    def take_fizz_or_buzz() -> Generator:
+        fizzes = cycle(["", "", "fizz"])
+        buzzes = cycle(["", "", "", "", "buzz"])
+        while True:
+            yield next(fizzes) + next(buzzes)
+
+    return (i[0] or str(i[1]) for i in zip(take_fizz_or_buzz(), range(1, numb + 1)))
