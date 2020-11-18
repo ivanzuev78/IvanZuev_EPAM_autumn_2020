@@ -30,9 +30,6 @@ import urllib.request
 
 def count_dots_on_i(url: str) -> int:
     try:
-        return sum(
-            sum(1 for char in line.decode() if char == "i")
-            for line in urllib.request.urlopen(url)
-        )
+        return sum(line.decode().count("i") for line in urllib.request.urlopen(url))
     except:
         raise ValueError(f"Unreachable {url}")
