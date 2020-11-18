@@ -60,7 +60,8 @@ def content_creator():
         return name_of_file
 
     yield wrapper
-    os.remove(name_of_file)
+    if os.path.isfile(os.getcwd() + "\\" + name_of_file):
+        os.remove(name_of_file)
 
 
 def test_read_magic_number_input_int_numb_1(input_int_1_true):
