@@ -19,8 +19,21 @@ print(custom_sum.__original_func)  # <function custom_sum at <some_id>>
 import functools
 
 
+def my_decorator(func):
+    def inner_decorator(inner_func):
+        def wrapper(*args, **kwargs):
+            wrapper.__doc__ = func.__doc__
+            wrapper.__name__ = func.__name__
+            wrapper.__original_func = func
+            return inner_func(*args, **kwargs)
+
+        return wrapper
+
+    return inner_decorator
+
+
 def print_result(func):
-    # Place for new decorator
+    @my_decorator(func)
     def wrapper(*args, **kwargs):
         """Function-wrapper which print result of an original function"""
         result = func(*args, **kwargs)
@@ -45,4 +58,6 @@ if __name__ == "__main__":
     without_print = custom_sum.__original_func
 
     # the result returns without printing
-    without_print(1, 2, 3, 4)
+    a = without_print(1, 2, 3, 4)
+
+    print("count without printing:", a)
