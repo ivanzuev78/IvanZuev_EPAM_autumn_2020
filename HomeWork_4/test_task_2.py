@@ -1,5 +1,5 @@
 import urllib.request
-from urllib.error import URLError
+from urllib.error import URLError, HTTPError
 
 import pytest
 from unittest.mock import MagicMock
@@ -7,31 +7,29 @@ from unittest.mock import MagicMock
 from HomeWork_4.task_2_mock_input import count_dots_on_i
 
 
-@pytest.fixture
-def magic_mock_into_urlopen_return_good_html():
-    func = urllib.request.urlopen
-    urllib.request.urlopen = MagicMock(
-        return_value=[b"<html>", b"<head>iii</head>", b"<body>qqq</body>", b"</html>"]
+def test_count_dots_on_i_good_(monkeypatch):
+    monkeypatch.setattr(
+        urllib.request,
+        "urlopen",
+        MagicMock(
+            return_value=[
+                b"<html>",
+                b"<head>iii</head>",
+                b"<body>qqq</body>",
+                b"</html>",
+            ]
+        ),
     )
-    yield
-    urllib.request.urlopen = func
-
-
-def test_count_dots_on_i_data_from_mock(magic_mock_into_urlopen_return_good_html):
     assert count_dots_on_i("https://example.com/") == 3
 
 
-@pytest.fixture
-def magic_mock_into_urlopen_return_url_error():
-    func = urllib.request.urlopen
-    urllib.request.urlopen = MagicMock(
-        return_value=URLError("<urlopen error [Errno 11001] getaddrinfo failed>")
-    )
-    yield
-    urllib.request.urlopen = func
-
-
-def test_count_dots_on_i_mock_unreachable_url(magic_mock_into_urlopen_return_url_error):
+def test_count_dots_on_i_mock_unreachable_url(monkeypatch):
     url = "https://unreachable-url.com/"
+
+    monkeypatch.setattr(
+        urllib.request,
+        "urlopen",
+        MagicMock(side_effect=HTTPError(404, "NF", "", "", "")),
+    )
     with pytest.raises(ValueError, match=f"Unreachable {url}"):
         count_dots_on_i(url)
