@@ -20,12 +20,16 @@ You will learn:
  - do a simple network requests
 
 
->>> count_dots_on_i("https://example.com/")
+# >>> count_dots_on_i("https://example.com/")
 59
 
 * https://docs.python.org/3/library/urllib.request.html#urllib.request.urlopen
 """
+import urllib.request
 
 
 def count_dots_on_i(url: str) -> int:
-    ...
+    try:
+        return sum(line.decode().count("i") for line in urllib.request.urlopen(url))
+    except:
+        raise ValueError(f"Unreachable {url}")
