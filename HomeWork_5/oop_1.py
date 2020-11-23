@@ -10,7 +10,7 @@ PEP8 соблюдать строго.
 давать логичные подходящие имена.
 """
 import datetime
-from typing import Union
+from typing import Optional
 
 
 class Homework:
@@ -23,13 +23,13 @@ class Homework:
         дней на выполнение
         created - c точной датой и временем создания
     Методы:
-        is_active - проверяет не истело ли время на выполнение задания,
+        is_active - проверяет не истекло ли время на выполнение задания,
         возвращает boolean
     """
 
-    def __init__(self, task_text: str, days_to_do: int):
-        self.text = task_text
-        self.deadline = datetime.timedelta(days_to_do)
+    def __init__(self, text: str, deadline: int):
+        self.text = text
+        self.deadline = datetime.timedelta(deadline)
         self.created = datetime.datetime.now()
 
     def is_active(self) -> bool:
@@ -52,10 +52,11 @@ class Student:
         self.first_name = first_name
 
     @staticmethod
-    def do_homework(homework: Homework) -> Union[Homework, None]:
+    def do_homework(homework: Homework) -> Optional[Homework]:
         if homework.is_active():
             return homework
         print("You are late")
+        return None
 
 
 class Teacher:
@@ -75,5 +76,5 @@ class Teacher:
         self.last_name = last_name
 
     @staticmethod
-    def create_homework(task: str, days_to_do: int) -> Homework:
-        return Homework(task, days_to_do)
+    def create_homework(text: str, deadline: int) -> Homework:
+        return Homework(text, deadline)
