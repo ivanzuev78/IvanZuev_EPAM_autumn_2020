@@ -11,7 +11,6 @@ def decorated_func():
         """This function can sum any objects which have __add___"""
         return functools.reduce(lambda x, y: x + y, args)
 
-    init_decorated_func = original_func(1, 2)
     yield original_func
 
 

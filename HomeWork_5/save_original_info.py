@@ -22,11 +22,11 @@ def my_decorator(func):
 
     def inner_decorator(inner_func):
         def wrapper(*args, **kwargs):
-            wrapper.__doc__ = func.__doc__
-            wrapper.__name__ = func.__name__
-            wrapper.__original_func = func
             return inner_func(*args, **kwargs)
 
+        wrapper.__doc__ = func.__doc__
+        wrapper.__name__ = func.__name__
+        wrapper.__original_func = func
         return wrapper
 
     return inner_decorator
