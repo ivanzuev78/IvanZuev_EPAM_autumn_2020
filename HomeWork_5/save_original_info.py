@@ -1,7 +1,7 @@
 import functools
 
 
-def my_decorator(func):
+def save_func_doc_and_name(func):
     """
     Написать декоратор который позволит сохранять информацию из
     исходной функции (__name__ and __doc__), а так же сохранит саму
@@ -33,7 +33,7 @@ def my_decorator(func):
 
 
 def print_result(func):
-    @my_decorator(func)
+    @save_func_doc_and_name(func)
     def wrapper(*args, **kwargs):
         """Function-wrapper which print result of an original function"""
         result = func(*args, **kwargs)
