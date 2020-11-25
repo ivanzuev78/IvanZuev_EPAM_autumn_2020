@@ -37,7 +37,6 @@ def test_homework_deadline():
 def test_student_do_homework_in_time(student):
     homework = Teacher.create_homework("Learn functions", 1)
     assert student.do_homework(homework) is homework
-    assert homework.deadline == datetime.timedelta(1)
 
 
 @pytest.fixture
@@ -55,7 +54,6 @@ def outdated_homework(monkeypatch):
 
 
 def test_student_do_homework_not_in_time(student, outdated_homework, capsys):
-    homework = outdated_homework
-    assert student.do_homework(homework) is None
+    assert student.do_homework(outdated_homework) is None
     captured = capsys.readouterr()
     assert captured.out == "You are late\n"
