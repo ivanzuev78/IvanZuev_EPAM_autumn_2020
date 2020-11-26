@@ -31,16 +31,6 @@ def test_print_result_original_name_saved(decorated_func):
     assert decorated_func.__name__ == "original_func"
 
 
-@pytest.fixture
-def decorated_and_origin_funcs():
-    def original_func(*args):
-        """This function can sum any objects which have __add___"""
-        return functools.reduce(lambda x, y: x + y, args)
-
-    decorated_func = print_result(original_func)
-    yield decorated_func, original_func
-
-
-def test_print_result_original_func_saved(decorated_and_origin_funcs, capsys):
-    decorated_func, original_func = decorated_and_origin_funcs
-    assert decorated_func.__original_func is original_func
+def test_print_result_original_func_saved():
+    decorated = print_result(sum)
+    assert decorated.__original_func is sum
