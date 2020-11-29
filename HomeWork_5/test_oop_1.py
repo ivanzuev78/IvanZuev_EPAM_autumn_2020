@@ -1,16 +1,17 @@
 import pytest
-
+import datetime
+from mock import patch, Mock
 from HomeWork_5.oop_1 import *
 
 
 @pytest.fixture
 def teacher():
-    yield Teacher("Daniil", "Shadrin")
+    return Teacher("Daniil", "Shadrin")
 
 
 @pytest.fixture
 def student():
-    yield Student("Roman", "Petrov")
+    return Student("Roman", "Petrov")
 
 
 def test_create_teacher(teacher):
@@ -40,20 +41,18 @@ def test_student_do_homework_in_time(student):
 
 
 @pytest.fixture
-def outdated_homework(monkeypatch):
-    homework = Teacher.create_homework("Learn functions", 1)
-    new_time = datetime.datetime.now() + datetime.timedelta(2)
-
-    class new_datetime:
-        @classmethod
-        def now(cls):
-            return new_time
-
-    monkeypatch.setattr(datetime, "datetime", new_datetime)
-    yield homework
+def outdated_homework():
+    return Teacher.create_homework("Learn functions", 1)
 
 
-def test_student_do_homework_not_in_time(student, outdated_homework, capsys):
+@patch("HomeWork_5.oop_1.datetime")
+def test_student_do_homework_not_in_time(
+    datetime_mock, student, outdated_homework, capsys
+):
+
+    datetime_mock.datetime.now = Mock(
+        return_value=datetime.datetime.now() + datetime.timedelta(3)
+    )
     assert student.do_homework(outdated_homework) is None
     captured = capsys.readouterr()
     assert captured.out == "You are late\n"
