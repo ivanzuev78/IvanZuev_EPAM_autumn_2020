@@ -1,5 +1,7 @@
-import pytest
+from copy import copy
 
+import pytest
+from mock import patch, Mock
 from HomeWork_6.oop_2 import *
 
 
@@ -47,19 +49,43 @@ def test_student_do_homework_in_time_bad_hw(student):
 
 
 @pytest.fixture
-def outdated_homework(monkeypatch):
-    homework = Teacher.create_homework("Learn functions", 1)
-    new_time = datetime.datetime.now() + datetime.timedelta(2)
-
-    class new_datetime:
-        @classmethod
-        def now(cls):
-            return new_time
-
-    monkeypatch.setattr(datetime, "datetime", new_datetime)
-    return homework
+def outdated_homework():
+    return Teacher.create_homework("Learn functions", 1)
 
 
-def test_student_do_homework_not_in_time(student, outdated_homework, capsys):
+@patch("HomeWork_6.oop_2.datetime")
+def test_student_do_homework_not_in_time(datetime_mock, student, outdated_homework):
+    datetime_mock.datetime.now = Mock(
+        return_value=datetime.datetime.now() + datetime.timedelta(3)
+    )
     with pytest.raises(DeadlineError, match="You are late"):
         student.do_homework(outdated_homework, "I must hurry up!")
+
+
+def test_check_homework_different_teachers_doesnt_stack_same_hw():
+    opp_teacher = Teacher("Daniil", "Shadrin")
+    advanced_python_teacher = Teacher("Aleksandr", "Smetanin")
+    good_student = Student("Ivan", "Zuev")
+
+    homework = Teacher.create_homework("Task of HW", 1)
+    hw_result = good_student.do_homework(homework, "I have done this hw")
+
+    opp_teacher.check_homework(hw_result)
+    dict_of_homeworks_after_1_accepted_work = copy(Teacher.homework_done)
+    advanced_python_teacher.check_homework(hw_result)
+    dict_of_homeworks_after_2_accepted_same_works = copy(Teacher.homework_done)
+
+    assert (
+        dict_of_homeworks_after_1_accepted_work
+        == dict_of_homeworks_after_2_accepted_same_works
+    )
+
+
+def test_reset_results_of_homeworks():
+    homework_1 = Teacher.create_homework("Task of HW", 1)
+    good_student = Student("Ivan", "Zuev")
+    hw_result_1 = good_student.do_homework(homework_1, "Some answer")
+    Teacher.check_homework(hw_result_1)
+    assert Teacher.homework_done
+    Teacher.reset_results()
+    assert Teacher.homework_done == defaultdict(list)

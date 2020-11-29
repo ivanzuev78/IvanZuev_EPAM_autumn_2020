@@ -86,7 +86,8 @@ class Teacher(Person):
     @staticmethod
     def check_homework(hw_result: "HomeworkResult") -> bool:
         if len(hw_result.solution) > 5:
-            Teacher.homework_done[hw_result.homework].append(hw_result)
+            if hw_result not in Teacher.homework_done[hw_result.homework]:
+                Teacher.homework_done[hw_result.homework].append(hw_result)
             return True
         return False
 
@@ -116,35 +117,3 @@ class HomeworkResult:
         self.solution = solution
         self.author = author
         self.created = datetime.datetime.now()
-
-
-if __name__ == "__main__":
-    opp_teacher = Teacher("Daniil", "Shadrin")
-    advanced_python_teacher = Teacher("Aleksandr", "Smetanin")
-
-    lazy_student = Student("Roman", "Petrov")
-    good_student = Student("Lev", "Sokolov")
-
-    oop_hw = opp_teacher.create_homework("Learn OOP", 1)
-    docs_hw = opp_teacher.create_homework("Read docs", 5)
-
-    result_1 = good_student.do_homework(oop_hw, "I have done this hw")
-    result_2 = good_student.do_homework(docs_hw, "I have done this hw too")
-    result_3 = lazy_student.do_homework(docs_hw, "done")
-    try:
-        result_4 = HomeworkResult(good_student, "fff", "Solution")
-    except Exception:
-        print("There was an exception here")
-    opp_teacher.check_homework(result_1)
-    temp_1 = opp_teacher.homework_done
-
-    advanced_python_teacher.check_homework(result_1)
-    temp_2 = Teacher.homework_done
-    print(temp_1 == temp_2)
-
-    opp_teacher.check_homework(result_2)
-    opp_teacher.check_homework(result_3)
-
-    print(Teacher.homework_done)
-    Teacher.reset_results()
-    print(Teacher.homework_done)
