@@ -1,5 +1,4 @@
 import pytest
-import datetime
 from mock import patch, Mock
 from HomeWork_5.oop_1 import *
 
