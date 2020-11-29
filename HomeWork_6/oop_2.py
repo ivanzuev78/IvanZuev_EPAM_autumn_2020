@@ -53,6 +53,71 @@ import datetime
 from collections import defaultdict
 
 
+class DeadlineError(Exception):
+    pass
+
+
+class Person:
+    def __init__(self, first_name: str, last_name: str):
+        self.first_name = first_name
+        self.last_name = last_name
+
+
+class Homework:
+    def __init__(self, text: str, deadline: int):
+        self.text = text
+        self.deadline = datetime.timedelta(deadline)
+        self.created = datetime.datetime.now()
+
+    def is_active(self) -> bool:
+        return self.created + self.deadline > datetime.datetime.now()
+
+
+class Teacher(Person):
+    homework_done = defaultdict(list)
+
+    def __init__(self, first_name: str, last_name: str):
+        super().__init__(first_name, last_name)
+
+    @staticmethod
+    def create_homework(text: str, deadline: int) -> Homework:
+        return Homework(text, deadline)
+
+    @staticmethod
+    def check_homework(hw_result: "HomeworkResult") -> bool:
+        if len(hw_result.solution) > 5:
+            Teacher.homework_done[hw_result.homework].append(hw_result)
+            return True
+        return False
+
+    @staticmethod
+    def reset_results(hw=None):
+        if hw:
+            del Teacher.homework_done[hw]
+        else:
+            Teacher.homework_done = defaultdict(list)
+
+
+class Student(Person):
+    def __init__(self, first_name: str, last_name: str):
+        super().__init__(first_name, last_name)
+
+    def do_homework(self, homework: Homework, solution: str) -> "HomeworkResult":
+        if not homework.is_active():
+            raise DeadlineError("You are late")
+        return HomeworkResult(homework, solution, self)
+
+
+class HomeworkResult:
+    def __init__(self, homework: Homework, solution: str, author: Student):
+        if not isinstance(homework, Homework):
+            raise TypeError("You gave a not Homework object")
+        self.homework = homework
+        self.solution = solution
+        self.author = author
+        self.created = datetime.datetime.now()
+
+
 if __name__ == "__main__":
     opp_teacher = Teacher("Daniil", "Shadrin")
     advanced_python_teacher = Teacher("Aleksandr", "Smetanin")
@@ -75,10 +140,11 @@ if __name__ == "__main__":
 
     advanced_python_teacher.check_homework(result_1)
     temp_2 = Teacher.homework_done
-    assert temp_1 == temp_2
+    print(temp_1 == temp_2)
 
     opp_teacher.check_homework(result_2)
     opp_teacher.check_homework(result_3)
 
-    print(Teacher.homework_done[oop_hw])
+    print(Teacher.homework_done)
     Teacher.reset_results()
+    print(Teacher.homework_done)
