@@ -1,3 +1,7 @@
+import datetime
+from collections import defaultdict
+
+
 """
 В этом задании будем улучшать нашу систему классов из задания прошлой лекции
 (Student, Teacher, Homework)
@@ -49,8 +53,6 @@ PEP8 соблюдать строго.
 К названием остальных переменных, классов и тд. подходить ответственно -
 давать логичные подходящие имена.
 """
-import datetime
-from collections import defaultdict
 
 
 class DeadlineError(Exception):
