@@ -1,6 +1,3 @@
-_counter = 0
-
-
 def instances_counter(cls):
     """
     Написать декоратор instances_counter, который применяется к любому классу
@@ -11,20 +8,20 @@ def instances_counter(cls):
     Имя декоратора и методов не менять
     """
 
-    class NewClass(cls):
+    class InstancesCounterDecoratedClass(cls):
+        cls._counter = 0
+
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)
-            global _counter
-            _counter += 1
+            cls._counter += 1
 
         @staticmethod
         def get_created_instances():
-            return _counter
+            return cls._counter
 
         @staticmethod
         def reset_instances_counter():
-            global _counter
-            count, _counter = _counter, 0
+            count, cls._counter = cls._counter, 0
             return count
 
-    return NewClass
+    return InstancesCounterDecoratedClass

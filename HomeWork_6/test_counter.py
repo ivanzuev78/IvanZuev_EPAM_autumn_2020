@@ -9,7 +9,7 @@ def decorated_class():
     class User:
         pass
 
-    return User
+    yield User
 
 
 def test_instances_counter_get_created_instances(decorated_class):
