@@ -44,7 +44,7 @@ def test_student_do_homework_in_time_good_hw(student):
 
 def test_student_do_homework_in_time_bad_hw(student):
     homework = Teacher.create_homework("Learn functions", 1)
-    homework_result = student.do_homework(homework, "done")
+    homework_result = student.do_homework(homework, "BAD!")
     assert Teacher.check_homework(homework_result) is False
 
 
@@ -62,17 +62,14 @@ def test_student_do_homework_not_in_time(datetime_mock, student, outdated_homewo
         student.do_homework(outdated_homework, "I must hurry up!")
 
 
-def test_check_homework_different_teachers_doesnt_stack_same_hw():
-    opp_teacher = Teacher("Daniil", "Shadrin")
-    advanced_python_teacher = Teacher("Aleksandr", "Smetanin")
-    good_student = Student("Ivan", "Zuev")
+def test_check_homework_doesnt_stack_same_hw():
+    hw_result = Student("Ivan", "Zuev").do_homework(
+        Teacher.create_homework("Task of HW", 1), "I have done this hw"
+    )
 
-    homework = Teacher.create_homework("Task of HW", 1)
-    hw_result = good_student.do_homework(homework, "I have done this hw")
-
-    opp_teacher.check_homework(hw_result)
+    Teacher.check_homework(hw_result)
     dict_of_homeworks_after_1_accepted_work = copy(Teacher.homework_done)
-    advanced_python_teacher.check_homework(hw_result)
+    Teacher.check_homework(hw_result)
     dict_of_homeworks_after_2_accepted_same_works = copy(Teacher.homework_done)
 
     assert (

@@ -78,7 +78,7 @@ class Homework:
 
 
 class Teacher(Person):
-    homework_done = defaultdict(list)
+    homework_done = defaultdict(set)
 
     def __init__(self, first_name: str, last_name: str):
         super().__init__(first_name, last_name)
@@ -90,8 +90,7 @@ class Teacher(Person):
     @staticmethod
     def check_homework(hw_result: "HomeworkResult") -> bool:
         if len(hw_result.solution) > 5:
-            if hw_result not in Teacher.homework_done[hw_result.homework]:
-                Teacher.homework_done[hw_result.homework].append(hw_result)
+            Teacher.homework_done[hw_result.homework].add(hw_result)
             return True
         return False
 
@@ -100,7 +99,7 @@ class Teacher(Person):
         if hw:
             del Teacher.homework_done[hw]
         else:
-            Teacher.homework_done = defaultdict(list)
+            Teacher.homework_done.clear()
 
 
 class Student(Person):
