@@ -6,8 +6,7 @@ of this element in the tree.
 Tree can only contains basic structures like:
     str, list, tuple, dict, set, int, bool
 """
-from typing import Any
-
+from typing import Any, Union
 
 # Example tree:
 example_tree = {
@@ -29,7 +28,22 @@ example_tree = {
 
 
 def find_occurrences(tree: dict, element: Any) -> int:
-    ...
+    counter = 0
+
+    def look_into_collection(collection_to_discover: Union[list, tuple, dict, set]):
+        nonlocal counter
+        if isinstance(collection_to_discover, dict):
+            collection_to_discover = collection_to_discover.values()
+
+        for item in collection_to_discover:
+            if item == element:
+                counter += 1
+            elif isinstance(item, (list, tuple, set, dict)):
+                look_into_collection(item)
+
+    look_into_collection(list(tree.values()))
+
+    return counter
 
 
 if __name__ == "__main__":
