@@ -27,7 +27,6 @@ def backspace_compare(first: str, second: str) -> bool:
                 real_typed_string = real_typed_string[:-1]
             else:
                 real_typed_string += char
-            print(real_typed_string)
         return real_typed_string
 
     return type_this_string(first) == type_this_string(second)
