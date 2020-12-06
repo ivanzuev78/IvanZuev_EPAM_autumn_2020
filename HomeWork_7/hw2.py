@@ -21,12 +21,12 @@ def backspace_compare(first: str, second: str) -> bool:
     """
 
     def type_this_string(string_to_type):
-        real_typed_string = ""
+        chars_in_real_typed_string = []
         for char in string_to_type:
-            if char == "#":
-                real_typed_string = real_typed_string[:-1]
+            if char == "#" and chars_in_real_typed_string:
+                chars_in_real_typed_string.pop(-1)
             else:
-                real_typed_string += char
-        return real_typed_string
+                chars_in_real_typed_string.append(char)
+        return chars_in_real_typed_string
 
     return type_this_string(first) == type_this_string(second)
