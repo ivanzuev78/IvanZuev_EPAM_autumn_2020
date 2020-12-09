@@ -25,12 +25,12 @@ def tic_tac_toe_checker(board: List[List]) -> str:
 
     """
 
-    def check_win(row: List):
-        if all(map(lambda x: x == "x", row)):
+    def check_win(row: List) -> str:
+        if set(row) == {"x"}:
             return "x"
-        elif all(map(lambda x: x == "o", row)):
+        elif set(row) == {"o"}:
             return "o"
-        return False
+        return "draw"
 
     all_lines_to_check_win = (
         board
@@ -40,7 +40,7 @@ def tic_tac_toe_checker(board: List[List]) -> str:
     )
 
     for line in all_lines_to_check_win:
-        if check_win(line):
+        if check_win(line) in ("x", "o"):
             return f"{check_win(line)} wins!"
 
     if "-" in itertools.chain(*board):
