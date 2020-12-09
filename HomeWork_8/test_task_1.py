@@ -33,3 +33,11 @@ def test_key_value_storage_numb_in_key_raises_error(filename):
     fill_the_file(dict_to_test, filename)
     with pytest.raises(ValueError, match="Key is digit"):
         KeyValueStorage(filename)
+
+
+def test_key_value_storage_build_in_attributes_take_precedence(filename):
+    dict_to_test = {"copy": "it is not copy!"}
+    fill_the_file(dict_to_test, filename)
+    storage = KeyValueStorage(filename)
+    assert storage["copy"] == "it is not copy!"
+    assert storage.copy != storage["copy"]
