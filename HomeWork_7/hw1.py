@@ -28,10 +28,8 @@ example_tree = {
 
 
 def find_occurrences(tree: dict, element: Any) -> int:
-    counter = 0
-
     def look_into_collection(collection_to_discover: Union[list, tuple, dict, set]):
-        nonlocal counter
+        counter = 0
         if isinstance(collection_to_discover, dict):
             collection_to_discover = collection_to_discover.values()
 
@@ -39,12 +37,7 @@ def find_occurrences(tree: dict, element: Any) -> int:
             if item == element:
                 counter += 1
             elif isinstance(item, (list, tuple, set, dict)):
-                look_into_collection(item)
+                counter += look_into_collection(item)
+        return counter
 
-    look_into_collection(list(tree.values()))
-
-    return counter
-
-
-if __name__ == "__main__":
-    print(find_occurrences(example_tree, "RED"))  # 6
+    return look_into_collection(list(tree.values()))
