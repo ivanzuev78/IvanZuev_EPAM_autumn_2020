@@ -34,9 +34,15 @@ To get amount of records in table TABLE1, use `select count(*) from TABLE1` quer
 
 
 Please refer to this documents for more information about how to retrieve data from sqlite database:
+
 DBAPI: https://www.python.org/dev/peps/pep-0249/
+
 sqlite3 module: https://docs.python.org/3/library/sqlite3.html
 
+создать таблицу
+
+    cursor.execute(
+        "CREATE TABLE employees(id integer PRIMARY KEY, name text, salary real, department text, position text, hireDate text)")
 
 Task
 ====
@@ -55,4 +61,4 @@ then
  - all above mentioned calls should reflect most recent data. If data in table changed after you created collection instance, your calls should return updated data.
 
 Avoid reading entire table into memory. When iterating through records, start reading the first record, then go to the next one, until records are exhausted.
-When writing tests, it's not always neccessary to mock database calls completely. Use supplied example.sqlite file as database fixture file.
+When writing tests, it's not always necessary to mock database calls completely. Use supplied example.sqlite file as database fixture file.
