@@ -4,20 +4,18 @@ import pytest
 
 
 @pytest.mark.parametrize("elem_to_search", ["str", 42, True, (12, 13)])
-def test_find_occurrences_hashable_element(elem_to_search):
+def test_find_occurrences_is_set(elem_to_search):
     tree = {
-        "elem_in_tree": elem_to_search,
-        "elem_in_list": [elem_to_search, "bad_elem"],
-        "elem_in_dict": {1: elem_to_search, 2: "bad_elem"},
         "elem_in_set": {elem_to_search, "bad_elem"},
-        "elem_in_tuple": (elem_to_search, "bad_elem"),
     }
 
-    assert find_occurrences(tree, elem_to_search) == 5
+    assert find_occurrences(tree, elem_to_search) == 1
 
 
-@pytest.mark.parametrize("elem_to_search", [{1, "elem"}, {1: 2, 2: True}])
-def test_find_occurrences_unhashable_element(elem_to_search):
+@pytest.mark.parametrize(
+    "elem_to_search", [{1, "elem"}, {1: 2, 2: True}, "str", 42, True, (12, 13)]
+)
+def test_find_occurrences_in_root_list_dict_tuple(elem_to_search):
 
     tree = {
         "elem_in_tree": elem_to_search,

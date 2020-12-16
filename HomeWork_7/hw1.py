@@ -28,12 +28,12 @@ example_tree = {
 
 
 def find_occurrences(tree: dict, element: Any) -> int:
-    def look_into_collection(collection_to_discover: Union[list, tuple, dict, set]):
+    def look_into_collection(collection_to_check: Union[list, tuple, dict, set]) -> int:
         counter = 0
-        if isinstance(collection_to_discover, dict):
-            collection_to_discover = collection_to_discover.values()
+        if isinstance(collection_to_check, dict):
+            collection_to_check = collection_to_check.values()
 
-        for item in collection_to_discover:
+        for item in collection_to_check:
             if item == element:
                 counter += 1
             elif isinstance(item, (list, tuple, set, dict)):
