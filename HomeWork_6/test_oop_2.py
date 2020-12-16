@@ -50,39 +50,46 @@ def test_student_do_homework_in_time_bad_hw(student):
 
 @pytest.fixture
 def outdated_homework():
-    return Teacher.create_homework("Learn functions", 1)
+    return Teacher.create_homework("Learn functions", 0)
 
 
-@patch("HomeWork_6.oop_2.datetime")
-def test_student_do_homework_not_in_time(datetime_mock, student, outdated_homework):
-    datetime_mock.datetime.now = Mock(
-        return_value=datetime.datetime.now() + datetime.timedelta(3)
-    )
+def test_student_do_homework_not_in_time(student, outdated_homework):
     with pytest.raises(DeadlineError, match="You are late"):
         student.do_homework(outdated_homework, "I must hurry up!")
 
 
-def test_check_homework_doesnt_stack_same_hw():
-    hw_result = Student("Ivan", "Zuev").do_homework(
-        Teacher.create_homework("Task of HW", 1), "I have done this hw"
+def test_check_homework_doesnt_stack_same_hw(student, teacher):
+    hw_result = student.do_homework(
+        teacher.create_homework("Task of HW", 1), "I have done this hw"
     )
+    hw_result_2 = student.do_homework(
+        teacher.create_homework("Task of HW_2", 1), "I have done this hw too"
+    )
+    teacher.check_homework(hw_result)
+    dict_of_homeworks_after_1_accepted_work = copy(teacher.homework_done)
+    teacher.check_homework(hw_result)
 
-    Teacher.check_homework(hw_result)
-    dict_of_homeworks_after_1_accepted_work = copy(Teacher.homework_done)
-    Teacher.check_homework(hw_result)
-    dict_of_homeworks_after_2_accepted_same_works = copy(Teacher.homework_done)
+    dict_of_homeworks_after_2_accepted_same_works = copy(teacher.homework_done)
 
     assert (
         dict_of_homeworks_after_1_accepted_work
         == dict_of_homeworks_after_2_accepted_same_works
     )
 
+    teacher.check_homework(hw_result_2)
+    dict_of_homeworks_after_2_accepted_same_works_and_1_another_hw = copy(
+        teacher.homework_done
+    )
+    assert (
+        dict_of_homeworks_after_2_accepted_same_works
+        != dict_of_homeworks_after_2_accepted_same_works_and_1_another_hw
+    )
 
-def test_reset_results_of_homeworks():
-    homework_1 = Teacher.create_homework("Task of HW", 1)
-    good_student = Student("Ivan", "Zuev")
-    hw_result_1 = good_student.do_homework(homework_1, "Some answer")
-    Teacher.check_homework(hw_result_1)
+
+def test_reset_results_of_homeworks(student, teacher):
+    homework_1 = teacher.create_homework("Task of HW", 1)
+    hw_result_1 = student.do_homework(homework_1, "Some answer")
+    teacher.check_homework(hw_result_1)
     assert Teacher.homework_done
-    Teacher.reset_results()
-    assert Teacher.homework_done == defaultdict(list)
+    teacher.reset_results()
+    assert not Teacher.homework_done
