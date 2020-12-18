@@ -19,21 +19,36 @@ from typing import Iterator, List, Union
 
 
 def merge_sorted_files(file_list: List[Union[Path, str]]) -> Iterator:
-    opened_files = []
+    def read_next_numb_from_file(file_manager_dict: dict) -> dict:
+        with open(file_manager_dict["filename"], "r") as f:
+            f.seek(file_manager_dict["cursor_position"])
+            numb = f.readline()
+            if numb[:-1].isdigit():
+                file_manager_dict["numb"] = int(numb)
+            else:
+                file_manager_dict["numb"] = None
+            file_manager_dict["cursor_position"] = f.tell()
+            return file_manager_dict
+
+    opened_files = {}
     for file in file_list:
-        with open(file, "r") as f:
-            opened_files.append(list(reversed(list(f))))
+        opened_files[file] = read_next_numb_from_file(
+            {"filename": file, "cursor_position": 0, "numb": None}
+        )
 
     while opened_files:
-        current_list_to_take_numb = None
-        current_list_index = None
-        for index, numb_list in enumerate(opened_files):
-            if current_list_to_take_numb is None:
-                current_list_to_take_numb = opened_files[0]
-                current_list_index = index
-            elif int(numb_list[-1]) < int(current_list_to_take_numb[-1]):
-                current_list_to_take_numb = numb_list
-                current_list_index = index
-        yield int(current_list_to_take_numb.pop(-1))
-        if not current_list_to_take_numb:
-            opened_files.pop(current_list_index)
+        current_file_manager_dict_to_take_numb = None
+        for filename in opened_files:
+            if current_file_manager_dict_to_take_numb is None:
+                current_file_manager_dict_to_take_numb = filename
+            elif (
+                opened_files[filename]["numb"]
+                < opened_files[current_file_manager_dict_to_take_numb]["numb"]
+            ):
+                current_file_manager_dict_to_take_numb = filename
+        yield opened_files[current_file_manager_dict_to_take_numb]["numb"]
+        opened_files[current_file_manager_dict_to_take_numb] = read_next_numb_from_file(
+            opened_files[current_file_manager_dict_to_take_numb]
+        )
+        if opened_files[current_file_manager_dict_to_take_numb]["numb"] is None:
+            del opened_files[current_file_manager_dict_to_take_numb]
