@@ -6,7 +6,11 @@ import pytest
 def test_suppressor_class_catch_error():
     with SuppressorClass(IndexError):
         raise IndexError("Raise IndexError from SuppressorClass")
-    assert True
+
+
+def test_suppressor_class_catch_inherited_exception():
+    with SuppressorClass(Exception):
+        raise IndexError("Raise IndexError from SuppressorClass")
 
 
 def test_suppressor_class_doesnt_catch_other_error():
@@ -18,7 +22,11 @@ def test_suppressor_class_doesnt_catch_other_error():
 def test_suppressor_function_catch_error():
     with suppressor_function(IndexError):
         raise IndexError("Raise IndexError from suppressor_function")
-    assert True
+
+
+def test_suppressor_function_catch_inherited_exception():
+    with suppressor_function(Exception):
+        raise IndexError("Raise IndexError from suppressor_function")
 
 
 def test_suppressor_function_doesnt_catch_other_error():

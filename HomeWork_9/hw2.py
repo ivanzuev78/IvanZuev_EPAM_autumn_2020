@@ -16,7 +16,7 @@ class SuppressorClass:
         pass
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        if exc_type == self.suppressed_error:
+        if issubclass(exc_type, self.suppressed_error):
             return True
         return False
 
