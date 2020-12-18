@@ -1,5 +1,3 @@
-import copy
-
 import pytest
 from mock import patch, Mock
 from HomeWork_5.oop_1 import *
@@ -34,16 +32,6 @@ def test_homework_is_created(teacher):
 def test_homework_deadline():
     homework = Teacher.create_homework("task", 5)
     assert homework.deadline == datetime.timedelta(5)
-
-
-def test_student_do_homework_in_time(student):
-    homework = Teacher.create_homework("Learn functions", 1)
-    assert student.do_homework(homework) is homework
-
-    hw_copy = copy.copy(homework)
-    assert hw_copy.text == homework.text
-    assert hw_copy.deadline == homework.deadline
-    assert hw_copy.created == homework.created
 
 
 @pytest.fixture
