@@ -15,12 +15,12 @@ def universal_file_counter(
     os.chdir(dir_path)
     counter = 0
     for file in os.listdir():
-        if file[-len(file_extension) :] == file_extension:
+        if Path(file).suffix == file_extension:
             with open(file, "r") as f:
                 if tokenizer:
                     counter += len(tokenizer(f.read()))
                 else:
-                    for _ in f:
-                        counter += 1
+                    counter += sum(1 for _ in f)
+
     os.chdir(current_dir)
     return counter
