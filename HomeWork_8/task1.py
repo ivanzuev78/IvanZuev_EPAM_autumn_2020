@@ -1,12 +1,7 @@
-from collections import defaultdict
-
-
-class KeyValueStorage(defaultdict):
+class KeyValueStorage:
     def __init__(self, filename):
-        super().__init__()
-
-        self._built_in_attributes = ["_built_in_attributes", *dir(self)]
-
+        self.filename = filename
+        self.inner_dict = {}
         with open(filename, "r") as file:
             for line in file:
                 key, value = line.split("=")
@@ -17,15 +12,14 @@ class KeyValueStorage(defaultdict):
                 if value.isdigit():
                     value = int(value)
 
-                self[key] = value
+                self.inner_dict[key] = value
 
     def __getattr__(self, key):
-        if key in self.keys():
-            return self[key]
+        if key in self.inner_dict.keys():
+            return self.inner_dict[key]
         return None
 
-    def __repr__(self):
-        return super().__repr__()[:16] + super().__repr__()[22:]
-
-    def __str__(self):
-        return super().__repr__()[22:-1]
+    def __getitem__(self, item):
+        if item in self.inner_dict.keys():
+            return self.inner_dict[item]
+        return None

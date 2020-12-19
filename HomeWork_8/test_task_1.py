@@ -36,8 +36,8 @@ def test_key_value_storage_numb_in_key_raises_error(filename):
 
 
 def test_key_value_storage_build_in_attributes_take_precedence(filename):
-    dict_to_test = {"copy": "it is not copy!"}
+    dict_to_test = {"__hash__": "it is not __hash__!"}
     fill_the_file(dict_to_test, filename)
     storage = KeyValueStorage(filename)
-    assert storage["copy"] == "it is not copy!"
-    assert storage.copy != storage["copy"]
+    assert storage["__hash__"] == "it is not __hash__!"
+    assert storage.__hash__ != storage["__hash__"]
