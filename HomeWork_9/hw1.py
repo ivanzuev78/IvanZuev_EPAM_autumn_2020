@@ -25,10 +25,7 @@ def merge_sorted_files(file_list: List[Union[Path, str]]) -> Iterator:
         file = open(filename, "r")
         opened_files[filename] = {"file": file}
         numb = next(opened_files[filename]["file"])
-        if numb[:-1].isdigit():
-            opened_files[filename]["numb"] = int(numb[:-1])
-        else:
-            raise ValueError("String is not a numb")
+        opened_files[filename]["numb"] = int(numb[:-1])
 
     while opened_files:
         current_file_manager_dict_to_take_numb = None
