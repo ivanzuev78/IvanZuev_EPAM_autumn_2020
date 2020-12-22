@@ -11,12 +11,40 @@ file2.txt:
 4
 6
 
->>> list(merge_sorted_files(["file1.txt", "file2.txt"]))
+# >>> list(merge_sorted_files(["file1.txt", "file2.txt"]))
 [1, 2, 3, 4, 5, 6]
 """
 from pathlib import Path
 from typing import Iterator, List, Union
 
 
-def merge_sorted_files(file_list: List[Union[Path, str], ...]) -> Iterator:
-    pass
+def merge_sorted_files(file_list: List[Union[Path, str]]) -> Iterator:
+
+    opened_files = {}
+    for filename in file_list:
+        file = open(filename, "r")
+        opened_files[filename] = {"file": file}
+        numb = next(opened_files[filename]["file"])
+        opened_files[filename]["numb"] = int(numb[:-1])
+
+    while opened_files:
+        current_file_manager_dict_to_take_numb = None
+        for filename in opened_files:
+            if current_file_manager_dict_to_take_numb is None:
+                current_file_manager_dict_to_take_numb = filename
+            elif (
+                opened_files[filename]["numb"]
+                < opened_files[current_file_manager_dict_to_take_numb]["numb"]
+            ):
+                current_file_manager_dict_to_take_numb = filename
+        yield opened_files[current_file_manager_dict_to_take_numb]["numb"]
+        try:
+            numb = next(opened_files[current_file_manager_dict_to_take_numb]["file"])
+            opened_files[current_file_manager_dict_to_take_numb]["numb"] = int(
+                numb[:-1]
+            )
+        except StopIteration:
+            opened_files[current_file_manager_dict_to_take_numb]["file"].close()
+            del opened_files[current_file_manager_dict_to_take_numb]
+        except ValueError:
+            raise ValueError("String is not a numb")
