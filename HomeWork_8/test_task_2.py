@@ -9,6 +9,8 @@ import pytest
 @pytest.fixture()
 def database_name():
     database_name = "test_database.sqlite"
+    if os.path.exists(database_name):
+        os.remove(database_name)
     conn = sqlite3.connect(database_name)
     cursor = conn.cursor()
     cursor.execute("CREATE TABLE test(name text, param_str text)")
@@ -22,7 +24,7 @@ def database_name():
     os.remove(database_name)
 
 
-def test_tabledata_create_with_good_database_name_and_column(database_name):
+def test_tabledata_with_good_database_name_and_column(database_name):
     data = TableData(database_name, "test")
     assert data["Yeltsin"] == {"name": "Yeltsin", "param_str": "test_str"}
     assert data["Name_not_DB"] is None
@@ -54,5 +56,10 @@ def test_tabledata_returns_recent_data(database_name):
         "INSERT INTO test(name, param_str) VALUES(?, ?)", ("man1", "test_str")
     )
     conn.commit()
-    conn.close()
     assert ("man1" in data) is True
+    conn.close()
+
+
+def test_tabledata_get_wrong_column_name(database_name):
+    with pytest.raises(AttributeError):
+        TableData(database_name, "wrong column")
