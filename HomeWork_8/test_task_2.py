@@ -1,8 +1,11 @@
+import os
 import sqlite3
 
 from HomeWork_8.task_2 import TableData
 
 import pytest
+
+os.chdir(os.path.dirname(__file__))
 
 
 def test_tabledata_with_good_database_name_and_column():
