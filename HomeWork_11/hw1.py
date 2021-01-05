@@ -34,8 +34,6 @@ assert ColorsEnum.RED == "RED"
 assert SizesEnum.XL == "XL"
 """
 
-from enum import EnumMeta, Enum
-
 
 class SimplifiedEnum(type):
     def __getattr__(self, item):
