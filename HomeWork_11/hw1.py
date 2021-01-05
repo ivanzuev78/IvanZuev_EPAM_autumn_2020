@@ -33,3 +33,12 @@ class SizesEnum(metaclass=SimplifiedEnum):
 assert ColorsEnum.RED == "RED"
 assert SizesEnum.XL == "XL"
 """
+
+from enum import EnumMeta, Enum
+
+
+class SimplifiedEnum(type):
+    def __getattr__(self, item):
+        if f'_{self.__name__}__keys' in self.__dict__:
+            if item in self.__dict__[f'_{self.__name__}__keys']:
+                return str(item)
