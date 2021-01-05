@@ -31,16 +31,17 @@ assert order_1.final_price() == 10
 
 
 class Order:
-    discount = 0
-
-    def __init__(self, price):
+    def __init__(self, price, discount=lambda order: order.price):
         self.price = price
+        self.discount = discount
 
     def final_price(self):
-        return self.price - self.price * self.discount
+        return self.discount(self)
 
 
 def morning_discount(order):
-    pass
+    return order.price - order.price * 0.5
 
-order_1 = Order(100, morning_discount)
+
+def elder_discount(order):
+    return order.price - order.price * 0.9
