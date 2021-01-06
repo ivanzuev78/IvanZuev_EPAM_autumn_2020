@@ -19,9 +19,14 @@ def open_html_from_pickle(file: str):
         return pickle.load(f)
 
 
+@pytest.fixture(autouse=True)
+def _change_dir():
+    os.chdir(os.path.dirname(__file__))
+
+
 @pytest.fixture()
 def all_companies():
-    os.chdir(os.path.dirname(__file__))
+
     return [
         {
             "company_url": f"some_url_{i}",
