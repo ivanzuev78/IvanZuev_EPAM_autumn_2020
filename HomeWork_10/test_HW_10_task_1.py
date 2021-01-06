@@ -13,8 +13,6 @@ from HomeWork_10.task_threads import (
 
 import pytest
 
-os.chdir(os.path.dirname(__file__))
-
 
 def open_html_from_pickle(file: str):
     with open(file, "rb") as f:
@@ -23,6 +21,7 @@ def open_html_from_pickle(file: str):
 
 @pytest.fixture()
 def all_companies():
+    os.chdir(os.path.dirname(__file__))
     return [
         {
             "company_url": f"some_url_{i}",
@@ -62,20 +61,20 @@ def test_get_top_10_most_expensive_companies(all_companies):
             "price_in_USD": i,
             "price_in_RUB": i * 75,
         }
-        for i in range(5, 15)
+        for i in range(14, 4, -1)
     ]
 
 
 def test_get_top_10_min_pe(all_companies):
-    assert get_top_10_min_pe(all_companies) == all_companies[:10]
+    assert get_top_10_min_pe(*all_companies) == all_companies[:10]
 
 
 def test_get_top_10_year_growth(all_companies):
-    assert get_top_10_year_growth(all_companies) == all_companies[5:15]
+    assert get_top_10_year_growth(all_companies) == all_companies[14:4:-1]
 
 
 def test_get_top_10_profit_52_weeks(all_companies):
-    assert get_top_10_profit_52_weeks(all_companies) == all_companies[5:15]
+    assert get_top_10_profit_52_weeks(all_companies) == all_companies[14:4:-1]
 
 
 def test_convert_usd_to_rub_in_company():
