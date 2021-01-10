@@ -34,10 +34,7 @@ def get_all_companies_from_page(html: Response) -> List[Dict]:
             }
         )
     for img, comp in zip(content.find_all("img"), companies):
-        if (
-            re.match("https://pproxy.markets.businessinsider.com", img["src"])
-            is not None
-        ):
+        if re.match("https://pproxy.markets.businessinsider.com", img["src"]) != "":
             comp[
                 "1_year_growth"
             ] = img.parent.previous_sibling.previous_sibling.contents[4].get_text()
@@ -119,7 +116,7 @@ def get_top_10_profit_52_weeks(data: List[Dict]) -> List[Dict]:
 
 def write_json_file(data: List[Dict], filename: str) -> None:
     with open(filename, "w") as file:
-        json.dump(data, file)
+        json.dump(data, file, indent=4)
 
 
 def get_all_companies_data() -> None:
