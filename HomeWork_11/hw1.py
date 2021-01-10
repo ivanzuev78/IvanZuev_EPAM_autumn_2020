@@ -35,17 +35,9 @@ class SimplifiedEnum(type):
     assert SizesEnum.XL == "XL"
     """
 
-    def __getattr__(cls, item):
-        if f"_{cls.__name__}__keys" in cls.__dict__:
-            if item in cls.__dict__[f"_{cls.__name__}__keys"]:
-                return str(item)
-
-    def __iter__(cls):
-        if f"_{cls.__name__}__keys" in cls.__dict__:
-            return (item for item in cls.__dict__[f"_{cls.__name__}__keys"])
-        return ()
-
-    def __len__(cls):
-        if f"_{cls.__name__}__keys" in cls.__dict__:
-            return len(cls.__dict__[f"_{cls.__name__}__keys"])
-        return 0
+    def __new__(cls, name, bases, dct):
+        for item in dct[f"_{name}__keys"]:
+            if item in dct:
+                continue
+            dct[item] = item
+        return super().__new__(cls, name, bases, dct)
