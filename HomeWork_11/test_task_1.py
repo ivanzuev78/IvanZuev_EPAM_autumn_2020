@@ -7,3 +7,6 @@ class ColorsEnum(metaclass=SimplifiedEnum):
 
 def test_simplified_enum():
     assert ColorsEnum.RED == "RED"
+    assert ColorsEnum.BLUE == "BLUE"
+    assert ColorsEnum.ORANGE == "ORANGE"
+    assert ColorsEnum.BLACK == "BLACK"
