@@ -2,7 +2,6 @@ import os
 import pickle
 
 from HomeWork_10.task_threads import (
-    convert_usd_to_rub_in_company,
     get_all_companies_from_page,
     get_paginator_pages_sp500,
     get_top_10_min_pe,
@@ -80,10 +79,3 @@ def test_get_top_10_year_growth(all_companies):
 
 def test_get_top_10_profit_52_weeks(all_companies):
     assert get_top_10_profit_52_weeks(all_companies) == all_companies[14:4:-1]
-
-
-def test_convert_usd_to_rub_in_company():
-    assert convert_usd_to_rub_in_company({"price_in_USD": 1}, 75) == {
-        "price_in_USD": 1,
-        "price_in_RUB": 75,
-    }

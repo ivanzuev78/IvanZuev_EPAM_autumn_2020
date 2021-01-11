@@ -82,11 +82,6 @@ def get_usd_to_rub() -> float:
     )
 
 
-def convert_usd_to_rub_in_company(company: Dict, usd_to_rub: float) -> Dict:
-    company["price_in_RUB"] = company["price_in_USD"] * usd_to_rub
-    return company
-
-
 def get_top_10_most_expensive_companies(
     data: List[Dict], usd_to_rub: float
 ) -> List[Dict]:
