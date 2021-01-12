@@ -2,3 +2,5 @@ pre-commit
 pytest~=6.1.2
 pytest-cov
 black
+bs4
+requests
